@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TopLabs Dashboard</title>
+    <title>TopLabsBazaar.com Dashboard</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
@@ -122,12 +122,13 @@
             background-color: #eef2f6;
         }
 
-        .btn-edit {
+        /* .btn-edit {
             background-color: #ffcccc;
             color: #333;
             padding: 6px 12px;
             font-size: 13px;
-        }
+        } */
+        /* REMOVED btn-edit style block */
 
         .btn-green {
             background-color: var(--success-color);
@@ -266,10 +267,7 @@
             align-items: center;
             padding: 15px 30px;
             background: var(--card-bg);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
-            border-radius: var(--radius-lg);
-            /* NEW: Transition for sticky */
             transition: all 0.2s ease;
         }
 
@@ -1285,8 +1283,9 @@
 
     <div class="app-toolbar">
         <div class="logo icon-text">
-            <span class="material-symbols-outlined">health_and_safety</span>
-            TopLabs
+            <!-- UPDATED: Replaced icon with image -->
+            <img src="toplabslogo.png" alt="TopLabs Logo"
+                style="height: 3em; width: auto; border-radius: 4px; object-fit: contain;">
         </div>
         <div class="controls">
             <button id="toggle-view-btn" class="btn-secondary icon-text">
@@ -1295,6 +1294,7 @@
             </button>
             <button id="cart-btn" class="btn-primary icon-text" style="display: none;">
                 <span class="material-symbols-outlined">shopping_bag</span>
+
             </button>
         </div>
     </div>
@@ -1730,15 +1730,16 @@
                 list.innerHTML += `
                     <div class="item-card lab-card">
                         <div class="lab-logo-container">
+                            <!-- UPDATED: Use local logoS3Path with placeholder fallback -->
                             ${lab.logoS3Path ?
-                        `<img src="https://placehold.co/100x100/eee/333?text=${lab.name.substring(0, 1)}" alt="${lab.name}">` :
+                        `<img src="${lab.logoS3Path}" alt="${lab.name}" onerror="this.src='https://placehold.co/100x100/eee/333?text=${lab.name.substring(0, 1)}'">` :
                         '<span class="material-symbols-outlined">business</span>'
                     }
                         </div>
                         <div class="lab-info">
                             <h3>${lab.name}</h3>
                         </div>
-                        <button class="btn-edit icon-text" data-action="editLab" data-id="${lab.id}">
+                        <button class="btn-gradient icon-text" data-action="editLab" data-id="${lab.id}">
                             <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
                         </button>
                     </div>
@@ -1779,7 +1780,7 @@
                             ${testsHtml}
                         </div>
                         <div class="item-card-footer">
-                             <button class="btn-edit icon-text" data-action="editProfile" data-id="${profile.id}">
+                             <button class="btn-gradient icon-text" data-action="editProfile" data-id="${profile.id}">
                                 <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
                                 Edit
                             </button>
@@ -1818,7 +1819,7 @@
                            </p>
                         </div>
                         <div class="item-card-footer">
-                             <button class="btn-edit icon-text" data-action="editPackage" data-id="${pkg.id}">
+                             <button class="btn-gradient icon-text" data-action="editPackage" data-id="${pkg.id}">
                                 <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
                                 Edit
                             </button>
@@ -1852,7 +1853,7 @@
                            </p>
                         </div>
                         <div class="item-card-footer">
-                             <button class="btn-edit icon-text" data-action="editTest" data-id="${test.id}">
+                             <button class="btn-gradient icon-text" data-action="editTest" data-id="${test.id}">
                                 <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
                                 Edit
                             </button>
