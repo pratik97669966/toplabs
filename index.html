@@ -10,22 +10,14 @@
 
     <style>
         :root {
-            /* "Official" Color Palette (Blue/Grey) */
             --primary-color: #bf2424;
-            /* NEW: User Red */
-            --primary-container: #e6f0ff;
             --secondary-color: #350f21;
-            /* NEW: User Dark Maroon */
             --tertiary-color: #64748B;
-            /* Muted Grey (for tags) */
             --success-color: #16a34a;
-            /* Green (for price/add) */
             --danger-color: #dc2626;
             --bg-color: #fdf6f6;
-            /* NEW: Light pink/off-white */
             --card-bg: #ffffff;
             --border-color: #f1e4e4;
-            /* NEW: Light red-tinged border */
             --shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.05);
             --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.06);
             --radius-md: 12px;
@@ -37,7 +29,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: #1e293b;
-            /* Darker Slate */
             margin: 0;
             line-height: 1.6;
         }
@@ -140,6 +131,14 @@
         .btn-green:hover {
             background-color: #15803d;
         }
+        
+        .btn-green[disabled] {
+            background-color: #d1fae5;
+            color: #065f46;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
 
         .btn-danger {
             background-color: var(--danger-color);
@@ -164,7 +163,7 @@
             margin-left: 8px;
         }
 
-        /* --- NEW: Cart & Billing Styles --- */
+        /* --- Cart & Billing Styles --- */
         .cart-item-card {
             display: flex;
             align-items: center;
@@ -172,53 +171,44 @@
             padding: 15px 0;
             border-bottom: 1px solid var(--border-color);
         }
-
         .cart-item-card:last-child {
             border-bottom: none;
         }
-
         .cart-item-info {
             flex-grow: 1;
         }
-
         .cart-item-info h4 {
             margin: 0 0 4px 0;
             font-size: 1.1em;
         }
-
         .cart-item-info p {
             margin: 0;
             font-size: 0.9em;
             color: var(--tertiary-color);
         }
-
         .cart-item-price {
             font-weight: 600;
             font-size: 1.1em;
             color: var(--secondary-color);
         }
-
         .cart-item-remove {
             background: none;
             color: var(--danger-color);
             padding: 5px;
             border-radius: 50%;
         }
-
         .cart-item-remove:hover {
             background-color: #fef2f2;
         }
-
+        
         .billing-summary {
             margin-top: 30px;
             border-top: 2px solid var(--border-color);
             padding-top: 20px;
         }
-
         .billing-summary h3 {
             margin-top: 0;
         }
-
         .billing-row {
             display: flex;
             justify-content: space-between;
@@ -226,11 +216,9 @@
             padding: 8px 0;
             color: var(--secondary-color);
         }
-
         .billing-row span:last-child {
             font-weight: 600;
         }
-
         .billing-row.billing-total {
             font-size: 1.2em;
             font-weight: 700;
@@ -251,6 +239,8 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             border-radius: var(--radius-lg);
+            /* NEW: Transition for sticky */
+            transition: all 0.2s ease; 
         }
 
         .app-toolbar .logo {
@@ -312,7 +302,7 @@
             align-items: center;
             margin-bottom: 15px;
         }
-
+        
         .column-header-top h2 {
             margin: 0;
         }
@@ -339,13 +329,13 @@
             margin-bottom: 15px;
             background: #fafafa;
         }
-
+        
         .item-card.lab-card {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-
+        
         .lab-logo-container {
             width: 50px;
             height: 50px;
@@ -357,25 +347,25 @@
             overflow: hidden;
             flex-shrink: 0;
         }
-
+        
         .lab-logo-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-
+        
         .lab-logo-container .material-symbols-outlined {
             color: var(--tertiary-color);
             font-size: 28px;
         }
-
+        
         .lab-info {
             flex-grow: 1;
         }
-
+        
         .lab-info h3 {
-            margin: 0;
-            font-size: 1.1em;
+             margin: 0;
+             font-size: 1.1em;
         }
 
         .item-card-header {
@@ -411,7 +401,7 @@
             font-size: 14px;
             color: var(--primary-color);
         }
-
+        
         .item-card-footer {
             margin-top: 15px;
             padding-top: 15px;
@@ -421,16 +411,14 @@
             gap: 10px;
         }
 
-        /* --- NEW: Mobile Admin Nav --- */
+        /* --- Mobile Admin Nav --- */
         #admin-mobile-back-btn {
             display: none;
-            /* Hidden by default */
             margin-bottom: 20px;
         }
 
         #admin-mobile-nav {
             display: none;
-            /* Hidden by default */
             grid-template-columns: 1fr 1fr;
             gap: 15px;
             margin-bottom: 20px;
@@ -505,6 +493,16 @@
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow);
             box-sizing: border-box;
+            background: var(--card-bg); /* UPDATED */
+        }
+        
+        .hero-section #search-bar {
+             /* NEW: Integrated search bar */
+            font-size: 1.2em;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 10px rgba(191, 36, 36, 0.1);
         }
 
         #search-icon {
@@ -513,6 +511,11 @@
             top: 50%;
             transform: translateY(-50%);
             color: #94a3b8;
+        }
+        
+        .hero-section #search-icon {
+            font-size: 1.5em; /* Bigger icon in hero */
+            color: var(--primary-color);
         }
 
         #clear-search-btn {
@@ -568,18 +571,10 @@
             margin-right: 10px;
         }
 
-        .badge-test {
-            background-color: var(--tertiary-color);
-        }
-
-        .badge-profile {
-            background-color: var(--secondary-color);
-        }
-
         .badge-package {
             background-color: var(--primary-color);
         }
-
+        
         .badge-lab {
             background-color: var(--success-color);
             color: white;
@@ -595,10 +590,9 @@
             gap: 10px;
         }
 
-        /* --- NEW: Browse by Category --- */
+        /* --- Browse by Category --- */
         .category-grid {
             display: grid;
-            /* UPDATED: More flexible min-width for mobile */
             grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 20px;
         }
@@ -621,7 +615,6 @@
         }
 
         .category-card .icon-container {
-            /* UPDATED: Rounded icon background for polish */
             width: 60px;
             height: 60px;
             border-radius: 50%;
@@ -634,7 +627,7 @@
             margin-bottom: 10px;
             transition: all 0.2s ease;
         }
-
+        
         .category-card:hover .icon-container {
             background-color: #ffe0e0;
             transform: scale(1.05);
@@ -644,13 +637,13 @@
             margin: 0;
             font-weight: 600;
             color: var(--secondary-color);
+            font-size: 0.9em; /* Slightly smaller text */
         }
 
 
         /* Package Grid */
         #package-grid {
             display: grid;
-            /* UPDATED: Safer min-width for mobile */
             grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
             gap: 25px;
         }
@@ -669,7 +662,7 @@
             font-size: 1.4em;
             color: var(--primary-color);
         }
-
+        
         .package-display-card .card-content .lab-name {
             font-weight: 600;
             color: var(--secondary-color);
@@ -677,7 +670,6 @@
         }
 
         .package-display-card .card-content .details {
-            /* UPDATED: Polished test count */
             margin: 15px 0;
             font-size: 0.95em;
             color: var(--secondary-color);
@@ -686,7 +678,7 @@
             align-items: center;
             gap: 8px;
         }
-
+        
         .package-display-card .card-content .details .material-symbols-outlined {
             font-size: 20px;
             color: var(--primary-color);
@@ -826,7 +818,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-
+        
         .form-group.full-width {
             grid-column: 1 / -1;
         }
@@ -886,7 +878,7 @@
         .tab-content.active {
             display: block;
         }
-
+        
         .lab-mapping-item {
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
@@ -894,7 +886,7 @@
             margin-bottom: 10px;
             background: #f9f9f9;
         }
-
+        
         .lab-mapping-item label {
             font-weight: 600;
             color: var(--secondary-color);
@@ -938,26 +930,6 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
-        }
-
-        #cart-summary-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        #cart-summary-list li {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        #cart-total {
-            text-align: right;
-            font-size: 1.4em;
-            font-weight: 700;
-            margin-top: 20px;
         }
 
         /* --- Snackbar/Toast --- */
@@ -1019,10 +991,9 @@
             }
         }
 
-        /* --- NEW: Bottom Nav Bar --- */
+        /* --- Bottom Nav Bar --- */
         #bottom-nav {
-            display: none;
-            /* Hidden by default, shown by JS/CSS on mobile */
+            display: none; 
             position: fixed;
             bottom: 0;
             left: 0;
@@ -1043,20 +1014,20 @@
             color: var(--tertiary-color);
             position: relative;
         }
-
+        
         .nav-item .nav-label {
             font-size: 12px;
             margin-top: 2px;
         }
-
+        
         .nav-item .material-symbols-outlined {
             font-size: 24px;
         }
-
+        
         .nav-item.active {
             color: var(--primary-color);
         }
-
+        
         .nav-badge {
             position: absolute;
             top: -2px;
@@ -1071,10 +1042,8 @@
             justify-content: center;
             font-size: 10px;
             font-weight: 600;
-            display: none;
-            /* Hidden by default */
+            display: none; /* Hidden by default */
         }
-
         /* --- End of Bottom Nav --- */
 
         /* --- Responsive Media Queries --- */
@@ -1085,51 +1054,130 @@
         }
 
         @media (max-width: 768px) {
-
-            /* --- NEW: Show bottom nav on mobile customer view --- */
+            /* --- NATIVE APP STYLES --- */
+            
+            /* Show bottom nav on mobile customer view */
             body.customer-view-mobile #bottom-nav {
                 display: flex;
             }
-
-            /* --- NEW: Hide header cart btn on mobile customer view --- */
-            body.customer-view-mobile .app-toolbar #cart-btn {
-                display: none;
-            }
-
-            /* --- NEW: Add padding to body to avoid nav overlap --- */
+            
+            /* Add padding to body to avoid nav overlap */
             body.customer-view-mobile {
                 padding-bottom: 80px;
             }
+            
+            /* Make top toolbar sticky */
+            body.customer-view-mobile .app-toolbar {
+                position: sticky;
+                top: 0;
+                z-index: 1002;
+                border-radius: 0;
+                margin-bottom: 0; /* Remove margin for sticky */
+                padding: 10px 15px; /* Tighter header */
+            }
+            
+            /* Hide admin-only toggle button */
+            body.customer-view-mobile .app-toolbar .controls #toggle-view-btn {
+                display: none;
+            }
+            
+            /* Hide top cart button (use bottom nav) */
+            body.customer-view-mobile .app-toolbar .controls #cart-btn {
+                display: none;
+            }
+            
+            /* Tighter mobile container */
+            body.customer-view-mobile .container {
+                padding: 10px;
+            }
+            
+            /* Tighter mobile hero */
+            body.customer-view-mobile .hero-section {
+                padding: 25px 15px;
+                margin-bottom: 20px;
+                margin-top: 10px; /* Space from sticky header */
+                border-radius: var(--radius-lg);
+            }
+            body.customer-view-mobile .hero-section h1 {
+                font-size: 1.8rem;
+            }
+            body.customer-view-mobile .hero-section p {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+             body.customer-view-mobile .hero-section #search-bar {
+                font-size: 1rem;
+                padding-top: 16px;
+                padding-bottom: 16px;
+            }
+            
+            /* 1-COLUMN package grid for perfect alignment */
+            body.customer-view-mobile #package-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            /* 3-COLUMN category grid for app-like icons */
+            body.customer-view-mobile #category-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            body.customer-view-mobile .category-card {
+                padding: 10px;
+            }
+            body.customer-view-mobile .category-card .icon-container {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            body.customer-view-mobile .category-card p {
+                font-size: 11px;
+            }
+            
+            /* Tighter package card padding */
+            body.customer-view-mobile .package-display-card .card-content {
+                padding: 20px;
+            }
+            body.customer-view-mobile .package-display-card .card-footer {
+                padding: 15px 20px;
+            }
 
+            /* --- End Native App Styles --- */
+
+            
             .search-result-card {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
 
-            /* --- NEW: Mobile Admin Grid --- */
+            /* --- Mobile Admin Grid --- */
             #admin-mobile-nav {
                 display: grid;
-                /* Show mobile nav */
             }
 
             #admin-view .dashboard-grid {
                 display: none;
-                /* Hide grid by default on mobile */
                 grid-template-columns: 1fr;
-                /* Stack columns when shown */
             }
 
             .column-list {
                 max-height: 60vh;
-                /* Taller list since it's the only one */
             }
         }
 
         @media (max-width: 600px) {
-            .app-toolbar {
+            /* Keep desktop header in admin mode */
+            body:not(.customer-view-mobile) .app-toolbar {
                 flex-direction: column;
                 gap: 15px;
+            }
+            
+            /* Make customer sticky header 1-line */
+             body.customer-view-mobile .app-toolbar {
+                flex-direction: row; 
+                justify-content: space-between;
+                gap: 0;
             }
 
             .modal-content {
@@ -1137,15 +1185,22 @@
                 width: 95%;
             }
 
-            /* NEW: Reduced container padding on mobile */
             .container {
-                padding: 15px;
+                padding: 15px; /* Default small padding */
+            }
+            
+            /* Re-apply native padding */
+            body.customer-view-mobile .container {
+                padding: 10px;
             }
 
             .hero-section h1 {
                 font-size: 2rem;
             }
-
+            body.customer-view-mobile .hero-section h1 {
+                font-size: 1.8rem;
+            }
+            
             .form-grid-2 {
                 grid-template-columns: 1fr;
             }
@@ -1158,7 +1213,7 @@
     <div class="app-toolbar">
         <div class="logo icon-text">
             <span class="material-symbols-outlined">health_and_safety</span>
-            TopLabs Dashboard
+            TopLabs
         </div>
         <div class="controls">
             <button id="toggle-view-btn" class="btn-secondary icon-text">
@@ -1201,7 +1256,7 @@
                     <p>Tests</p>
                 </div>
             </div>
-
+            
             <div class="dashboard-grid">
 
                 <!-- === LABS COLUMN === -->
@@ -1229,12 +1284,11 @@
                                 Add Profile
                             </button>
                         </div>
-                        <input type="search" class="admin-search-bar" id="profiles-search"
-                            placeholder="Search profiles...">
+                        <input type="search" class="admin-search-bar" id="profiles-search" placeholder="Search profiles...">
                     </div>
                     <div class="column-list" id="profiles-list"></div>
                 </div>
-
+                
                 <!-- === PACKAGES COLUMN === -->
                 <div class="column">
                     <div class="column-header">
@@ -1245,8 +1299,7 @@
                                 Add Package
                             </button>
                         </div>
-                        <input type="search" class="admin-search-bar" id="packages-search"
-                            placeholder="Search packages...">
+                        <input type="search" class="admin-search-bar" id="packages-search" placeholder="Search packages...">
                     </div>
                     <div class="column-list" id="packages-list"></div>
                 </div>
@@ -1288,18 +1341,18 @@
 
             <div id="search-results-container" class="page-section">
             </div>
-
-            <div id="featured-packages-container" class="page-section">
-                <h2>Popular Health Packages</h2>
-                <div id="package-grid">
-                </div>
-            </div>
-
-            <!-- NEW SECTION: BROWSE BY CATEGORY -->
+            
+             <!-- NEW SECTION: BROWSE BY CATEGORY -->
             <div id="browse-by-category-container" class="page-section">
                 <h2>Browse by Health Concern</h2>
                 <div id="category-grid" class="category-grid">
                     <!-- Categories will be rendered here by JS -->
+                </div>
+            </div>
+
+            <div id="featured-packages-container" class="page-section">
+                <h2>Popular Health Packages</h2>
+                <div id="package-grid">
                 </div>
             </div>
 
@@ -1324,8 +1377,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-tertiary" id="admin-modal-cancel-btn">Cancel</button>
-                <button class="btn-danger" id="admin-modal-delete-btn"
-                    style="display: none; float: left;">Delete</button>
+                <button class="btn-danger" id="admin-modal-delete-btn" style="display: none; float: left;">Delete</button>
                 <button class="btn-primary icon-text" id="admin-modal-save-btn">
                     <span class="material-symbols-outlined">save</span>
                     Save
@@ -1372,7 +1424,7 @@
                 <div id="cart-summary-list">
                     <!-- Cart items will be injected here -->
                 </div>
-
+                
                 <!-- NEW: Billing Summary -->
                 <div class="billing-summary">
                     <h3>Bill Details</h3>
@@ -1536,7 +1588,6 @@
                     who_is_it_for: "Adults over 30 or anyone wanting a deep dive into their health status."
                 }
             ],
-            // --- NEW: Re-added categories for the customer UI ---
             categories: [
                 { id: "cat1", name: "Full Body", icon: "health_and_safety", query: "Checkup" },
                 { id: "cat2", name: "Heart", icon: "monitor_heart", query: "Lipid" },
@@ -1604,10 +1655,10 @@
                 list.innerHTML += `
                     <div class="item-card lab-card">
                         <div class="lab-logo-container">
-                            ${lab.logoS3Path ?
-                        `<img src="https://placehold.co/100x100/eee/333?text=${lab.name.substring(0, 1)}" alt="${lab.name}">` :
-                        '<span class="material-symbols-outlined">business</span>'
-                    }
+                            ${lab.logoS3Path ? 
+                                `<img src="https://placehold.co/100x100/eee/333?text=${lab.name.substring(0,1)}" alt="${lab.name}">` : 
+                                '<span class="material-symbols-outlined">business</span>'
+                            }
                         </div>
                         <div class="lab-info">
                             <h3>${lab.name}</h3>
@@ -1619,7 +1670,7 @@
                 `;
             });
         }
-
+        
         function renderProfiles(searchTerm = '') {
             const list = document.getElementById('profiles-list');
             list.innerHTML = '';
@@ -1662,7 +1713,7 @@
                 `;
             });
         }
-
+        
         function renderPackages(searchTerm = '') {
             const list = document.getElementById('packages-list');
             list.innerHTML = '';
@@ -1787,7 +1838,6 @@
                                 <span class="material-symbols-outlined">business</span>
                                 ${lab ? lab.name : 'TopLabs'}
                             </div>
-                            <!-- UPDATED: Polished "details" row -->
                             <div class="details">
                                 <span class="material-symbols-outlined">science</span>
                                 Includes ${uniqueTestIds.size} unique tests
@@ -1809,7 +1859,6 @@
             });
         }
 
-        // --- NEW: Render Categories ---
         function renderCategories() {
             const grid = document.getElementById('category-grid');
             grid.innerHTML = '';
@@ -1827,7 +1876,7 @@
 
         function renderCustomerView() {
             renderFeaturedPackages();
-            renderCategories(); // Also render the new category grid
+            renderCategories(); 
         }
 
         // --- 7. ADMIN MODAL LOGIC ---
@@ -1868,7 +1917,7 @@
                         </div>
                     `;
                     adminModalSaveBtn.onclick = () => saveLab(id, returnTo);
-                    if (id) adminModalDeleteBtn.onclick = () => deleteItem('lab', id);
+                    if(id) adminModalDeleteBtn.onclick = () => deleteItem('lab', id);
                     break;
 
                 // --- TEST MODAL ---
@@ -1896,7 +1945,7 @@
                             </div>
                         `;
                     }).join('');
-
+                    
                     adminModalBody.innerHTML = `
                         <div class="form-group">
                             <label for="form-test-name">Test Name</label>
@@ -1913,7 +1962,7 @@
                         </div>
                     `;
                     adminModalSaveBtn.onclick = () => saveTest(id, returnTo);
-                    if (id) adminModalDeleteBtn.onclick = () => deleteItem('test', id);
+                    if(id) adminModalDeleteBtn.onclick = () => deleteItem('test', id);
                     break;
 
                 // --- PROFILE MODAL ---
@@ -1922,7 +1971,7 @@
                     const profile = action === 'editProfile' ? findProfile(id) : null;
                     titleText = profile ? 'Edit Profile' : 'Add New Profile';
                     titleIcon = 'collections_bookmark';
-
+                    
                     let testsHtml = appDatabase.tests.map(test => {
                         const isChecked = profile ? profile.testIds.includes(test.id) : false;
                         return `
@@ -1940,15 +1989,13 @@
                         </div>
                         <div class="form-group">
                             <label>Map Tests to this Profile</label>
-                            <!-- NEW: Search bar for tests -->
                             <input type="search" class="admin-search-bar" id="test-profile-mapping-search" placeholder="Search tests to map..." style="margin-bottom: 15px;">
                             <div class="mapping-container" id="test-profile-mapping-container">${testsHtml}</div>
                         </div>
                     `;
                     adminModalSaveBtn.onclick = () => saveProfile(id, returnTo);
-                    if (id) adminModalDeleteBtn.onclick = () => deleteItem('profile', id);
+                    if(id) adminModalDeleteBtn.onclick = () => deleteItem('profile', id);
 
-                    // --- NEW: Add test mapping search filter ---
                     const testProfileSearch = adminModalBody.querySelector('#test-profile-mapping-search');
                     if (testProfileSearch) {
                         testProfileSearch.addEventListener('input', (e) => {
@@ -1967,8 +2014,8 @@
                     const pkg = action === 'editPackage' ? findPackage(id) : null;
                     titleText = pkg ? 'Edit Package' : 'Add New Package';
                     titleIcon = 'inventory_2';
-                    const currentPackageId = id; // Store id for returnTo logic
-
+                    const currentPackageId = id; 
+                    
                     let labOptions = appDatabase.labs.map(lab => {
                         const isSelected = pkg ? pkg.labId === lab.id : false;
                         return `<option value="${lab.id}" ${isSelected ? 'selected' : ''}>${lab.name}</option>`;
@@ -1983,7 +2030,7 @@
                             </div>
                         `;
                     }).join('');
-
+                    
                     let individualTestsHtml = appDatabase.tests.map(t => {
                         const isChecked = pkg ? pkg.testIds.includes(t.id) : false;
                         return `
@@ -2059,8 +2106,7 @@
                             </div>
                         </div>
                     `;
-
-                    // Activate tab switching
+                    
                     adminModalBody.querySelectorAll('.tab-link').forEach(link => {
                         link.addEventListener('click', (e) => {
                             adminModalBody.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
@@ -2070,22 +2116,20 @@
                         });
                     });
 
-                    // --- NEW: Add-on-the-fly Listeners ---
                     const addProfileBtn = adminModalBody.querySelector('#add-profile-from-package-btn');
-                    if (addProfileBtn) {
+                    if(addProfileBtn) {
                         addProfileBtn.addEventListener('click', () => {
                             openAdminModal('addProfile', null, { action: action, id: currentPackageId });
                         });
                     }
-
+                    
                     const addTestBtn = adminModalBody.querySelector('#add-test-from-package-btn');
-                    if (addTestBtn) {
+                    if(addTestBtn) {
                         addTestBtn.addEventListener('click', () => {
                             openAdminModal('addTest', null, { action: action, id: currentPackageId });
                         });
                     }
 
-                    // --- NEW: Add mapping search filters ---
                     const profileSearch = adminModalBody.querySelector('#profile-mapping-search');
                     if (profileSearch) {
                         profileSearch.addEventListener('input', (e) => {
@@ -2096,7 +2140,7 @@
                             });
                         });
                     }
-
+                    
                     const testSearch = adminModalBody.querySelector('#test-mapping-search');
                     if (testSearch) {
                         testSearch.addEventListener('input', (e) => {
@@ -2107,9 +2151,9 @@
                             });
                         });
                     }
-
+                    
                     adminModalSaveBtn.onclick = () => savePackage(id, returnTo);
-                    if (id) adminModalDeleteBtn.onclick = () => deleteItem('package', id);
+                    if(id) adminModalDeleteBtn.onclick = () => deleteItem('package', id);
                     break;
             }
             adminModalTitle.innerHTML = `<span class="material-symbols-outlined">${titleIcon}</span> ${titleText}`;
@@ -2152,7 +2196,7 @@
                 const discountPrice = parseInt(input.value, 10);
                 const mrpEl = document.getElementById(`form-test-mrp-${labId}`);
                 const mrp = parseInt(mrpEl.value, 10);
-
+                
                 if (discountPrice && mrp) {
                     testMappedLabs.push({ labId, mrp, discountPrice });
                 }
@@ -2195,7 +2239,7 @@
                 closeAdminModal();
             }
         }
-
+        
         function savePackage(id, returnTo = null) {
             const name = document.getElementById('form-package-name').value;
             const labId = document.getElementById('form-package-lab').value;
@@ -2207,10 +2251,10 @@
             if (!name || !labId || !mrp || !discountPrice) {
                 showSnackbar('Package Name, Lab, MRP, and Discount Price are required.', 'error'); return;
             }
-
+            
             const mappedProfileIds = Array.from(document.querySelectorAll('#profile-mapping-container .mapping-checkbox:checked')).map(cb => cb.dataset.id);
             const mappedTestIds = Array.from(document.querySelectorAll('#test-mapping-container .mapping-checkbox:checked')).map(cb => cb.dataset.id);
-
+            
             if (id) {
                 const pkg = findPackage(id);
                 pkg.name = name; pkg.labId = labId; pkg.mrp = mrp; pkg.discountPrice = discountPrice;
@@ -2245,7 +2289,7 @@
                 appDatabase.packages = appDatabase.packages.filter(i => i.id !== id);
                 itemName = 'Package';
             }
-
+            
             renderAllAdmin();
             renderCustomerView();
             closeAdminModal();
@@ -2265,7 +2309,7 @@
                 title = item.name;
                 titleIcon = 'inventory_2';
                 const lab = findLab(item.labId);
-
+                
                 const uniqueTestIds = getTestIdsFromPackage(id);
                 let testsHtml = Array.from(uniqueTestIds).map(tId => {
                     const test = findTest(tId);
@@ -2295,7 +2339,6 @@
                     </div>
                 `;
             } else {
-                // Details for other types not implemented for customer view
                 return;
             }
 
@@ -2324,11 +2367,10 @@
             resultsContainer.style.display = 'block';
             resultsContainer.innerHTML = '';
 
-            // Customer view ONLY searches packages
             const packages = appDatabase.packages.filter(p => p.name.toLowerCase().includes(term));
-
+            
             let resultsHtml = '';
-
+            
             packages.forEach(item => {
                 const lab = findLab(item.labId);
                 const testCount = getTestIdsFromPackage(item.id).size;
@@ -2393,13 +2435,11 @@
         const bottomNavCartBadge = document.getElementById('nav-cart-badge');
 
         function updateCartCount() {
-            // Update header button
             cartBtn.innerHTML = `
                 <span class="material-symbols-outlined">shopping_bag</span>
                 Cart (${globalCart.length})
             `;
-
-            // NEW: Update bottom nav badge
+            
             if (globalCart.length > 0) {
                 bottomNavCartBadge.textContent = globalCart.length;
                 bottomNavCartBadge.style.display = 'flex';
@@ -2409,12 +2449,10 @@
         }
 
         function addToCart(type, id) {
-            // Only packages can be added to cart
             if (type !== 'package') {
                 showSnackbar('Only packages can be added to the cart.', 'error');
                 return;
             }
-            // Check if already in cart
             if (globalCart.some(item => item.id === id)) {
                 showSnackbar('Item is already in your cart.', 'error');
                 return;
@@ -2423,26 +2461,22 @@
             updateCartCount();
             const pkg = findPackage(id);
             showSnackbar(`${pkg.name} added to cart!`, 'success');
-
-            // --- NEW: Re-render UI to show "Added" state
-            renderFeaturedPackages(); // Re-render packages
+            
+            renderFeaturedPackages(); 
             if (document.getElementById('search-results-container').style.display === 'block') {
-                handleSearch(); // Re-render search if open
+                handleSearch();
             }
         }
 
-        // --- NEW: Remove From Cart Function ---
         function removeFromCart(type, id) {
             globalCart = globalCart.filter(item => item.id !== id);
             updateCartCount();
             showSnackbar('Item removed from cart', 'success');
-
-            // Re-render UI
+            
             renderFeaturedPackages();
             if (document.getElementById('search-results-container').style.display === 'block') {
                 handleSearch();
             }
-            // If checkout modal is open, refresh it
             if (checkoutModal.style.display === 'block') {
                 openCheckoutModal();
             }
@@ -2453,22 +2487,22 @@
             const itemTotalEl = document.getElementById('billing-item-total');
             const deliveryFeeEl = document.getElementById('billing-delivery-fee');
             const toPayEl = document.getElementById('billing-to-pay');
-
-            listEl.innerHTML = ''; // Clear old content
-
+            
+            listEl.innerHTML = ''; 
+            
             let total = 0;
-            const deliveryFee = 50; // Hardcoded fee as requested
+            const deliveryFee = 50; 
 
             if (globalCart.length === 0) {
                 listEl.innerHTML = '<p style="text-align: center; color: var(--tertiary-color);">Your cart is empty.</p>';
             }
-
+            
             globalCart.forEach(item => {
                 const pkg = findPackage(item.id);
                 if (pkg) {
                     const lab = findLab(pkg.labId);
                     total += pkg.discountPrice;
-
+                    
                     const itemCard = document.createElement('div');
                     itemCard.className = 'cart-item-card';
                     itemCard.innerHTML = `
@@ -2484,19 +2518,18 @@
                     listEl.appendChild(itemCard);
                 }
             });
-
+            
             itemTotalEl.textContent = `₹${total}`;
             deliveryFeeEl.textContent = `₹${deliveryFee}`;
             toPayEl.textContent = `₹${total + deliveryFee}`;
 
-            // Handle remove buttons INSIDE the cart
             listEl.querySelectorAll('.cart-item-remove').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const target = e.currentTarget;
                     removeFromCart(target.dataset.type, target.dataset.id);
                 });
             });
-
+            
             checkoutModal.style.display = 'block';
         }
 
@@ -2513,7 +2546,7 @@
                 return;
             }
             if (globalCart.length === 0) {
-                showSnackbar('Your cart is empty.', 'error');
+                 showSnackbar('Your cart is empty.', 'error');
                 return;
             }
             console.log("--- ORDER PLACED (SIMULATION) ---", {
@@ -2525,7 +2558,7 @@
             globalCart = [];
             updateCartCount();
             closeCheckoutModal();
-            renderFeaturedPackages(); // Re-render packages to reset buttons
+            renderFeaturedPackages(); 
         }
 
         // --- 12. APP INITIALIZATION & EVENT LISTENERS ---
@@ -2534,7 +2567,7 @@
             const customerView = document.getElementById('customer-view');
             const toggleBtn = document.getElementById('toggle-view-btn');
 
-            // --- NEW: Mobile Admin Nav Logic ---
+            // --- Mobile Admin Nav Logic ---
             const adminMobileNav = document.getElementById('admin-mobile-nav');
             const adminDashboardGrid = document.querySelector('#admin-view .dashboard-grid');
             const adminMobileBackBtn = document.getElementById('admin-mobile-back-btn');
@@ -2548,48 +2581,42 @@
             adminMobileNav.addEventListener('click', (e) => {
                 const card = e.target.closest('.mobile-nav-card');
                 if (!card) return;
-
+                
                 const columnKey = card.dataset.column;
-
-                // Hide nav, show grid and back button
+                
                 adminMobileNav.style.display = 'none';
-                adminDashboardGrid.style.display = 'grid'; // Show the grid container
+                adminDashboardGrid.style.display = 'grid'; 
                 adminMobileBackBtn.style.display = 'inline-flex';
-
-                // Hide all columns, then show the selected one
+                
                 Object.values(adminColumns).forEach(col => col.style.display = 'none');
-                if (adminColumns[columnKey]) {
+                if(adminColumns[columnKey]) {
                     adminColumns[columnKey].style.display = 'flex';
                 }
             });
 
             adminMobileBackBtn.addEventListener('click', () => {
-                // Hide grid and back button, show nav
                 adminMobileNav.style.display = 'grid';
                 adminDashboardGrid.style.display = 'none';
                 adminMobileBackBtn.style.display = 'none';
-
-                // Reset columns to be visible for desktop
                 Object.values(adminColumns).forEach(col => col.style.display = 'flex');
             });
-
-            // --- REVISED: Toggle View Button Listener ---
+            
+            // --- Toggle View Button Listener ---
             toggleBtn.addEventListener('click', () => {
                 if (adminView.style.display !== 'none') {
                     // --- SWITCHING TO CUSTOMER VIEW ---
-                    renderCustomerView(); // Render customer view *before* showing
+                    renderCustomerView(); 
                     adminView.style.display = 'none';
                     customerView.style.display = 'block';
-
-                    // NEW: Check for mobile view
+                    
                     if (window.innerWidth <= 768) {
                         document.body.classList.add('customer-view-mobile');
                     } else {
                         document.body.classList.remove('customer-view-mobile');
                     }
-
-                    cartBtn.style.display = 'inline-flex'; // Show header cart (CSS will hide it if mobile)
-
+                    
+                    cartBtn.style.display = 'inline-flex'; 
+                    
                     toggleBtn.innerHTML = `
                         <span class="material-symbols-outlined">admin_panel_settings</span>
                         Show Admin Panel
@@ -2599,14 +2626,13 @@
                     adminView.style.display = 'block';
                     customerView.style.display = 'none';
                     cartBtn.style.display = 'none';
-                    document.body.classList.remove('customer-view-mobile'); // NEW: Always remove when in admin
-
+                    document.body.classList.remove('customer-view-mobile'); 
+                    
                     toggleBtn.innerHTML = `
                         <span class="material-symbols-outlined">visibility</span>
                         Show Customer View
                     `;
-
-                    // Reset admin view state based on window size
+                    
                     if (window.innerWidth <= 768) {
                         adminMobileNav.style.display = 'grid';
                         adminDashboardGrid.style.display = 'none';
@@ -2616,7 +2642,6 @@
                         adminDashboardGrid.style.display = 'grid';
                         adminMobileBackBtn.style.display = 'none';
                     }
-                    // Ensure all columns are visible by default (for desktop/grid)
                     Object.values(adminColumns).forEach(col => col.style.display = 'flex');
                 }
             });
@@ -2639,30 +2664,27 @@
             cartBtn.addEventListener('click', openCheckoutModal);
             document.getElementById('checkout-submit-btn').addEventListener('click', placeOrder);
 
-            // --- NEW: Resize listener to toggle mobile UI ---
+            // --- Resize listener to toggle mobile UI ---
             window.addEventListener('resize', () => {
-                if (customerView.style.display === 'block') { // Only if in customer view
+                if (customerView.style.display === 'block') { 
                     if (window.innerWidth <= 768) {
                         document.body.classList.add('customer-view-mobile');
                     } else {
                         document.body.classList.remove('customer-view-mobile');
                     }
                 }
-
-                // Also reset admin view on resize
+                
                 if (adminView.style.display === 'block') {
                     if (window.innerWidth <= 768) {
-                        // On mobile, if in admin, default to nav
                         adminMobileNav.style.display = 'grid';
                         adminDashboardGrid.style.display = 'none';
                         adminMobileBackBtn.style.display = 'none';
-                        Object.values(adminColumns).forEach(col => col.style.display = 'flex'); // Reset columns
+                        Object.values(adminColumns).forEach(col => col.style.display = 'flex'); 
                     } else {
-                        // On desktop, default to grid
                         adminMobileNav.style.display = 'none';
                         adminDashboardGrid.style.display = 'grid';
                         adminMobileBackBtn.style.display = 'none';
-                        Object.values(adminColumns).forEach(col => col.style.display = 'flex'); // Reset columns
+                        Object.values(adminColumns).forEach(col => col.style.display = 'flex'); 
                     }
                 }
             });
@@ -2675,53 +2697,49 @@
                 const action = target.dataset.action;
                 const type = target.dataset.type;
                 const id = target.dataset.id;
-
-                // --- RE-ORDERED LOGIC TO FIX "ADD TO CART" BUG ---
-
-                // 1. Customer Actions (check specific actions first)
+            
+                // 1. Customer Actions
                 if (action === 'addToCart') {
                     addToCart(type, id);
-                    return; // Stop here
+                    return; 
                 }
                 if (action === 'viewDetails') {
                     openDetailsModal(type, id);
-                    return; // Stop here
+                    return; 
                 }
                 if (action === 'removeFromCart') {
                     removeFromCart(type, id);
-                    return; // Stop here
+                    return; 
                 }
-                // --- NEW: Handle category search clicks
                 if (action === 'searchCategory') {
                     const query = target.dataset.query;
                     searchBar.value = query;
                     handleSearch();
                     searchBar.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    return; // Stop here
+                    return; 
                 }
-
-                // --- NEW: Handle Bottom Nav clicks ---
+                
+                // 2. Bottom Nav clicks
                 if (action === 'nav-home' || action === 'nav-search' || action === 'nav-cart') {
-
+                    
                     if (action === 'nav-home') {
                         document.querySelectorAll('#bottom-nav .nav-item').forEach(item => item.classList.remove('active'));
                         target.classList.add('active');
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                     if (action === 'nav-search') {
-                        document.querySelectorAll('#bottom-nav .nav-item').forEach(item => item.classList.remove('active'));
-                        target.classList.add('active');
+                         document.querySelectorAll('#bottom-nav .nav-item').forEach(item => item.classList.remove('active'));
+                         target.classList.add('active');
                         searchBar.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         searchBar.focus();
                     }
                     if (action === 'nav-cart') {
-                        // Cart is a modal action, it doesn't change the active state of Home/Search
                         openCheckoutModal();
                     }
-                    return; // Stop here
+                    return; 
                 }
-
-                // 2. Admin Actions (will only run if customer actions didn't match)
+                
+                // 3. Admin Actions
                 if (action.startsWith('add') || action.startsWith('edit')) {
                     openAdminModal(action, id);
                 }
