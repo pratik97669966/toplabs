@@ -689,6 +689,8 @@
         .package-display-card {
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            /* ADDED: This clips the children to the card's rounded border */
         }
 
         .package-display-card .card-content {
@@ -749,12 +751,19 @@
 
         .modal-content {
             background-color: #fefefe;
-            margin: 8% auto;
+            margin: 5vh auto;
+            /* Changed from 8% to 5vh */
             padding: 0;
             border-radius: var(--radius-lg);
             width: 90%;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.4s ease-out;
+            /* NEW: Flex layout to control height */
+            display: flex;
+            flex-direction: column;
+            max-height: 90vh;
+            overflow: hidden;
+            /* ADDED: This clips the header/footer to the rounded corners */
         }
 
         .modal-content-admin {
@@ -797,6 +806,8 @@
             align-items: center;
             padding: 20px 30px;
             border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+            /* NEW: Prevent header from shrinking */
         }
 
         .modal-header h2 {
@@ -813,8 +824,11 @@
 
         .modal-body {
             padding: 30px;
-            max-height: 60vh;
+            /* max-height: 60vh; */
+            /* REMOVED */
             overflow-y: auto;
+            flex-grow: 1;
+            /* NEW: Allow body to grow and fill space */
         }
 
         .modal-footer {
@@ -822,6 +836,8 @@
             border-top: 1px solid var(--border-color);
             text-align: right;
             background: #f9f9f9;
+            flex-shrink: 0;
+            /* NEW: Prevent footer from shrinking */
         }
 
         .modal-footer button {
@@ -1088,6 +1104,7 @@
 
         /* --- Responsive Media Queries --- */
         @media (min-width: 769px) {
+
             /* Desktop Admin Nav: 4-col */
             #admin-mobile-nav {
                 grid-template-columns: repeat(4, 1fr);
@@ -1234,7 +1251,8 @@
             }
 
             .modal-content {
-                margin: 5% auto;
+                margin: 3vh auto;
+                /* Tighter margin on mobile */
                 width: 95%;
             }
 
@@ -1277,7 +1295,6 @@
             </button>
             <button id="cart-btn" class="btn-primary icon-text" style="display: none;">
                 <span class="material-symbols-outlined">shopping_bag</span>
-                Cart (0)
             </button>
         </div>
     </div>
@@ -1870,10 +1887,6 @@
                 let cartButtonHtml = '';
                 if (isInCart) {
                     cartButtonHtml = `
-                        <button class="btn-tertiary icon-text" data-action="removeFromCart" data-type="package" data-id="${pkg.id}">
-                            <span class="material-symbols-outlined">remove_shopping_cart</span>
-                            Remove
-                        </button>
                         <button class="btn-green icon-text" disabled>
                             <span class="material-symbols-outlined">check</span>
                             Added
@@ -2437,10 +2450,6 @@
                 let cartButtonHtml = '';
                 if (isInCart) {
                     cartButtonHtml = `
-                        <button class="btn-tertiary icon-text" data-action="removeFromCart" data-type="package" data-id="${item.id}">
-                            <span class="material-symbols-outlined">remove_shopping_cart</span>
-                            Remove
-                        </button>
                         <button class="btn-green icon-text" disabled>
                             <span class="material-symbols-outlined">check</span>
                             Added
@@ -2495,7 +2504,7 @@
         function updateCartCount() {
             cartBtn.innerHTML = `
                 <span class="material-symbols-outlined">shopping_bag</span>
-                Cart (${globalCart.length})
+                ${globalCart.length}
             `;
 
             if (globalCart.length > 0) {
