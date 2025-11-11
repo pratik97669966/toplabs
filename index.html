@@ -1,0 +1,2740 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TopLabs Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <style>
+        :root {
+            /* "Official" Color Palette (Blue/Grey) */
+            --primary-color: #bf2424;
+            /* NEW: User Red */
+            --primary-container: #e6f0ff;
+            --secondary-color: #350f21;
+            /* NEW: User Dark Maroon */
+            --tertiary-color: #64748B;
+            /* Muted Grey (for tags) */
+            --success-color: #16a34a;
+            /* Green (for price/add) */
+            --danger-color: #dc2626;
+            --bg-color: #fdf6f6;
+            /* NEW: Light pink/off-white */
+            --card-bg: #ffffff;
+            --border-color: #f1e4e4;
+            /* NEW: Light red-tinged border */
+            --shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.05);
+            --shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.06);
+            --radius-md: 12px;
+            --radius-lg: 16px;
+        }
+
+        /* --- Global Styles --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: #1e293b;
+            /* Darker Slate */
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .icon-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-text .material-symbols-outlined {
+            font-size: 1.25em;
+        }
+
+        /* --- Buttons --- */
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            background-color: #a61d1d;
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary:hover {
+            background-color: #1e293b;
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-tertiary {
+            background-color: #f8f9fa;
+            color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-tertiary:hover {
+            background-color: #eef2f6;
+        }
+
+        .btn-edit {
+            background-color: #ffcccc;
+            color: #333;
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        .btn-green {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-green:hover {
+            background-color: #15803d;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #b91c1c;
+        }
+
+        .price {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: var(--success-color);
+        }
+
+        .price .mrp {
+            font-size: 0.8em;
+            font-weight: 400;
+            color: var(--tertiary-color);
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        /* --- NEW: Cart & Billing Styles --- */
+        .cart-item-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item-card:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-info {
+            flex-grow: 1;
+        }
+
+        .cart-item-info h4 {
+            margin: 0 0 4px 0;
+            font-size: 1.1em;
+        }
+
+        .cart-item-info p {
+            margin: 0;
+            font-size: 0.9em;
+            color: var(--tertiary-color);
+        }
+
+        .cart-item-price {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: var(--secondary-color);
+        }
+
+        .cart-item-remove {
+            background: none;
+            color: var(--danger-color);
+            padding: 5px;
+            border-radius: 50%;
+        }
+
+        .cart-item-remove:hover {
+            background-color: #fef2f2;
+        }
+
+        .billing-summary {
+            margin-top: 30px;
+            border-top: 2px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .billing-summary h3 {
+            margin-top: 0;
+        }
+
+        .billing-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.05em;
+            padding: 8px 0;
+            color: var(--secondary-color);
+        }
+
+        .billing-row span:last-child {
+            font-weight: 600;
+        }
+
+        .billing-row.billing-total {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary-color);
+            border-top: 1px dashed var(--border-color);
+            padding-top: 15px;
+            margin-top: 10px;
+        }
+
+
+        /* --- App Toolbar --- */
+        .app-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: var(--card-bg);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: var(--radius-lg);
+        }
+
+        .app-toolbar .logo {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .app-toolbar .controls button {
+            margin-left: 10px;
+        }
+
+        /* --- Card Styles --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease-out;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        /* --- Section Styling --- */
+        .page-section {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto 40px auto;
+        }
+
+        /* --- Admin View (Responsive) --- */
+        #admin-view .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .column {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .column-header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .column-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .column-header-top h2 {
+            margin: 0;
+        }
+
+        .admin-search-bar {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1em;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            box-sizing: border-box;
+        }
+
+        .column-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+
+        .item-card {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            margin-bottom: 15px;
+            background: #fafafa;
+        }
+
+        .item-card.lab-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .lab-logo-container {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .lab-logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .lab-logo-container .material-symbols-outlined {
+            color: var(--tertiary-color);
+            font-size: 28px;
+        }
+
+        .lab-info {
+            flex-grow: 1;
+        }
+
+        .lab-info h3 {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .item-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .item-card-header h3 {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .item-card-body ul {
+            list-style: none;
+            padding-left: 10px;
+            margin: 10px 0 0 0;
+        }
+
+        .item-card-body li {
+            color: #475569;
+            font-size: 0.9em;
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .item-card-body li::before {
+            content: "chevron_right";
+            font-family: 'Material Symbols Outlined';
+            font-size: 14px;
+            color: var(--primary-color);
+        }
+
+        .item-card-footer {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* --- NEW: Mobile Admin Nav --- */
+        #admin-mobile-back-btn {
+            display: none;
+            /* Hidden by default */
+            margin-bottom: 20px;
+        }
+
+        #admin-mobile-nav {
+            display: none;
+            /* Hidden by default */
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .mobile-nav-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease-out;
+        }
+
+        .mobile-nav-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+        }
+
+        .mobile-nav-card .material-symbols-outlined {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .mobile-nav-card p {
+            margin: 0;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+
+        /* --- Customer View (Landing Page) --- */
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--radius-lg);
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 30px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #search-bar {
+            width: 100%;
+            padding: 16px 50px 16px 55px;
+            font-size: 1.1em;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            box-sizing: border-box;
+        }
+
+        #search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        #clear-search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2em;
+            color: #94a3b8;
+            background: none;
+            display: none;
+        }
+
+        /* Search Results */
+        #search-results-container {
+            display: none;
+            max-width: 800px;
+            margin: 20px auto 0 auto;
+        }
+
+        .search-result-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-result-card .info {
+            flex-grow: 1;
+        }
+
+        .search-result-card .info h3 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .search-result-card .info p {
+            margin: 5px 0 0 0;
+            color: #555;
+        }
+
+        .search-result-card .info .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-weight: 600;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .badge-test {
+            background-color: var(--tertiary-color);
+        }
+
+        .badge-profile {
+            background-color: var(--secondary-color);
+        }
+
+        .badge-package {
+            background-color: var(--primary-color);
+        }
+
+        .badge-lab {
+            background-color: var(--success-color);
+            color: white;
+            font-size: 0.8em;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .search-result-card .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* --- NEW: Browse by Category --- */
+        .category-grid {
+            display: grid;
+            /* UPDATED: More flexible min-width for mobile */
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            border: 1px solid var(--border-color);
+        }
+
+        .category-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+        }
+
+        .category-card .icon-container {
+            /* UPDATED: Rounded icon background for polish */
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .category-card:hover .icon-container {
+            background-color: #ffe0e0;
+            transform: scale(1.05);
+        }
+
+        .category-card p {
+            margin: 0;
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+
+        /* Package Grid */
+        #package-grid {
+            display: grid;
+            /* UPDATED: Safer min-width for mobile */
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+        }
+
+        .package-display-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .package-display-card .card-content {
+            padding: 25px;
+            flex-grow: 1;
+        }
+
+        .package-display-card .card-content h3 {
+            font-size: 1.4em;
+            color: var(--primary-color);
+        }
+
+        .package-display-card .card-content .lab-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .package-display-card .card-content .details {
+            /* UPDATED: Polished test count */
+            margin: 15px 0;
+            font-size: 0.95em;
+            color: var(--secondary-color);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .package-display-card .card-content .details .material-symbols-outlined {
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+
+        .package-display-card .card-footer {
+            padding: 20px 25px;
+            background: #fdfdfd;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* --- Modal Styles --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 8% auto;
+            padding: 0;
+            border-radius: var(--radius-lg);
+            width: 90%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .modal-content-admin {
+            max-width: 700px;
+        }
+
+        .modal-content-checkout {
+            max-width: 700px;
+        }
+
+        .modal-content-details {
+            max-width: 800px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .close-btn {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 30px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            padding: 20px 30px;
+            border-top: 1px solid var(--border-color);
+            text-align: right;
+            background: #f9f9f9;
+        }
+
+        .modal-footer button {
+            margin-left: 10px;
+        }
+
+        /* Admin Modal */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 1em;
+            background: #fdfdfd;
+        }
+
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .mapping-container {
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 15px;
+        }
+
+        .mapping-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .mapping-item:last-child {
+            border-bottom: none;
+        }
+
+        .mapping-item input[type="checkbox"] {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .modal-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab-link {
+            padding: 12px 20px;
+            cursor: pointer;
+            background: #f1f1f1;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+            margin-right: 5px;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .tab-link.active {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--card-bg);
+            position: relative;
+            top: 1px;
+        }
+
+        .tab-content {
+            display: none;
+            padding-top: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .lab-mapping-item {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+        }
+
+        .lab-mapping-item label {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Customer Details Modal */
+        #details-modal-body .detail-section {
+            margin-bottom: 25px;
+        }
+
+        #details-modal-body .detail-section h3 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        #details-modal-body .detail-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        #details-modal-body .detail-list li {
+            padding: 12px;
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: var(--radius-md);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #details-modal-body p {
+            color: #333;
+        }
+
+        /* Checkout Form (Responsive) */
+        #checkout-form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        #cart-summary-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #cart-summary-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        #cart-total {
+            text-align: right;
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-top: 20px;
+        }
+
+        /* --- Snackbar/Toast --- */
+        .snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: var(--radius-md);
+            padding: 16px;
+            position: fixed;
+            z-index: 2000;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 30px;
+            font-size: 1em;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .snackbar.success {
+            background-color: var(--success-color);
+        }
+
+        .snackbar.error {
+            background-color: #d32f2f;
+        }
+
+        .snackbar.show {
+            visibility: visible;
+            animation: snackbar-in 0.5s ease;
+        }
+
+        .snackbar.hide {
+            animation: snackbar-out 0.5s ease forwards;
+        }
+
+        @keyframes snackbar-in {
+            from {
+                bottom: -50px;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 30px;
+                opacity: 1;
+            }
+        }
+
+        @keyframes snackbar-out {
+            from {
+                bottom: 30px;
+                opacity: 1;
+            }
+
+            to {
+                bottom: -50px;
+                opacity: 0;
+            }
+        }
+
+        /* --- NEW: Bottom Nav Bar --- */
+        #bottom-nav {
+            display: none;
+            /* Hidden by default, shown by JS/CSS on mobile */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            padding: 8px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+            cursor: pointer;
+            color: var(--tertiary-color);
+            position: relative;
+        }
+
+        .nav-item .nav-label {
+            font-size: 12px;
+            margin-top: 2px;
+        }
+
+        .nav-item .material-symbols-outlined {
+            font-size: 24px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .nav-badge {
+            position: absolute;
+            top: -2px;
+            right: 25%;
+            background-color: var(--danger-color);
+            color: white;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            display: none;
+            /* Hidden by default */
+        }
+
+        /* --- End of Bottom Nav --- */
+
+        /* --- Responsive Media Queries --- */
+        @media (min-width: 600px) {
+            #checkout-form-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            /* --- NEW: Show bottom nav on mobile customer view --- */
+            body.customer-view-mobile #bottom-nav {
+                display: flex;
+            }
+
+            /* --- NEW: Hide header cart btn on mobile customer view --- */
+            body.customer-view-mobile .app-toolbar #cart-btn {
+                display: none;
+            }
+
+            /* --- NEW: Add padding to body to avoid nav overlap --- */
+            body.customer-view-mobile {
+                padding-bottom: 80px;
+            }
+
+            .search-result-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            /* --- NEW: Mobile Admin Grid --- */
+            #admin-mobile-nav {
+                display: grid;
+                /* Show mobile nav */
+            }
+
+            #admin-view .dashboard-grid {
+                display: none;
+                /* Hide grid by default on mobile */
+                grid-template-columns: 1fr;
+                /* Stack columns when shown */
+            }
+
+            .column-list {
+                max-height: 60vh;
+                /* Taller list since it's the only one */
+            }
+        }
+
+        @media (max-width: 600px) {
+            .app-toolbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                width: 95%;
+            }
+
+            /* NEW: Reduced container padding on mobile */
+            .container {
+                padding: 15px;
+            }
+
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .form-grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-toolbar">
+        <div class="logo icon-text">
+            <span class="material-symbols-outlined">health_and_safety</span>
+            TopLabs Dashboard
+        </div>
+        <div class="controls">
+            <button id="toggle-view-btn" class="btn-secondary icon-text">
+                <span class="material-symbols-outlined">visibility</span>
+                Show Customer View
+            </button>
+            <button id="cart-btn" class="btn-primary icon-text" style="display: none;">
+                <span class="material-symbols-outlined">shopping_bag</span>
+                Cart (0)
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- =================================== -->
+        <!-- ===== NEW ADMIN DASHBOARD VIEW ==== -->
+        <!-- =================================== -->
+        <div id="admin-view">
+            <!-- NEW: Mobile Navigation -->
+            <button id="admin-mobile-back-btn" class="btn-tertiary icon-text">
+                <span class="material-symbols-outlined">arrow_back</span>
+                Back to Dashboard
+            </button>
+            <div id="admin-mobile-nav">
+                <div class="mobile-nav-card" data-column="labs">
+                    <span class="material-symbols-outlined">business</span>
+                    <p>Labs</p>
+                </div>
+                <div class="mobile-nav-card" data-column="profiles">
+                    <span class="material-symbols-outlined">collections_bookmark</span>
+                    <p>Profiles</p>
+                </div>
+                <div class="mobile-nav-card" data-column="packages">
+                    <span class="material-symbols-outlined">inventory_2</span>
+                    <p>Packages</p>
+                </div>
+                <div class="mobile-nav-card" data-column="tests">
+                    <span class="material-symbols-outlined">science</span>
+                    <p>Tests</p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <!-- === LABS COLUMN === -->
+                <div class="column">
+                    <div class="column-header">
+                        <div class="column-header-top">
+                            <h2>Labs</h2>
+                            <button class="btn-primary icon-text" data-action="addLab">
+                                <span class="material-symbols-outlined">add</span>
+                                Add Lab
+                            </button>
+                        </div>
+                        <input type="search" class="admin-search-bar" id="labs-search" placeholder="Search labs...">
+                    </div>
+                    <div class="column-list" id="labs-list"></div>
+                </div>
+
+                <!-- === PROFILES COLUMN === -->
+                <div class="column">
+                    <div class="column-header">
+                        <div class="column-header-top">
+                            <h2>Profiles</h2>
+                            <button class="btn-primary icon-text" data-action="addProfile">
+                                <span class="material-symbols-outlined">add</span>
+                                Add Profile
+                            </button>
+                        </div>
+                        <input type="search" class="admin-search-bar" id="profiles-search"
+                            placeholder="Search profiles...">
+                    </div>
+                    <div class="column-list" id="profiles-list"></div>
+                </div>
+
+                <!-- === PACKAGES COLUMN === -->
+                <div class="column">
+                    <div class="column-header">
+                        <div class="column-header-top">
+                            <h2>Packages</h2>
+                            <button class="btn-primary icon-text" data-action="addPackage">
+                                <span class="material-symbols-outlined">add</span>
+                                Add Package
+                            </button>
+                        </div>
+                        <input type="search" class="admin-search-bar" id="packages-search"
+                            placeholder="Search packages...">
+                    </div>
+                    <div class="column-list" id="packages-list"></div>
+                </div>
+
+                <!-- === TESTS COLUMN === -->
+                <div class="column">
+                    <div class="column-header">
+                        <div class="column-header-top">
+                            <h2>Tests</h2>
+                            <button class="btn-primary icon-text" data-action="addTest">
+                                <span class="material-symbols-outlined">add</span>
+                                Add Test
+                            </button>
+                        </div>
+                        <input type="search" class="admin-search-bar" id="tests-search" placeholder="Search tests...">
+                    </div>
+                    <div class="column-list" id="tests-list"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- =================================== -->
+        <!-- ======== CUSTOMER VIEW ======== -->
+        <!-- =================================== -->
+        <div id="customer-view" style="display: none;">
+
+            <div class="hero-section page-section">
+                <h1>Book Your Lab Test</h1>
+                <p>Reliable, at-home sample collection. Get your reports online.</p>
+                <div class="search-container">
+                    <span id="search-icon" class="material-symbols-outlined">search</span>
+                    <input type="text" id="search-bar" placeholder="Search for any test or package...">
+                    <button id="clear-search-btn" class="icon-text">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="search-results-container" class="page-section">
+            </div>
+
+            <div id="featured-packages-container" class="page-section">
+                <h2>Popular Health Packages</h2>
+                <div id="package-grid">
+                </div>
+            </div>
+
+            <!-- NEW SECTION: BROWSE BY CATEGORY -->
+            <div id="browse-by-category-container" class="page-section">
+                <h2>Browse by Health Concern</h2>
+                <div id="category-grid" class="category-grid">
+                    <!-- Categories will be rendered here by JS -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =================================== -->
+    <!-- ========= MODAL (ADMIN) ========= -->
+    <!-- =================================== -->
+    <div id="admin-modal" class="modal">
+        <div class="modal-content modal-content-admin">
+            <div class="modal-header">
+                <h2 id="admin-modal-title" class="icon-text">
+                    <span class="material-symbols-outlined">edit_note</span>
+                    Edit Item
+                </h2>
+                <span id="close-admin-modal-btn" class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body" id="admin-modal-body">
+                <!-- Admin form content injected here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-tertiary" id="admin-modal-cancel-btn">Cancel</button>
+                <button class="btn-danger" id="admin-modal-delete-btn"
+                    style="display: none; float: left;">Delete</button>
+                <button class="btn-primary icon-text" id="admin-modal-save-btn">
+                    <span class="material-symbols-outlined">save</span>
+                    Save
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================== -->
+    <!-- ==== MODAL (CUSTOMER DETAILS) === -->
+    <!-- =================================== -->
+    <div id="details-modal" class="modal">
+        <div class="modal-content modal-content-details">
+            <div class="modal-header">
+                <h2 id="details-modal-title" class="icon-text">
+                    <span class="material-symbols-outlined">article</span>
+                    Item Details
+                </h2>
+                <span id="close-details-modal-btn" class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body" id="details-modal-body">
+                <!-- Details content injected here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="details-modal-close-btn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================== -->
+    <!-- ====== MODAL (CHECKOUT) ======= -->
+    <!-- =================================== -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content modal-content-checkout">
+            <div class="modal-header">
+                <h2 class="icon-text">
+                    <span class="material-symbols-outlined">shopping_cart_checkout</span>
+                    Your Cart & Checkout
+                </h2>
+                <span id="close-checkout-modal-btn" class="close-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <h3>Order Summary</h3>
+                <div id="cart-summary-list">
+                    <!-- Cart items will be injected here -->
+                </div>
+
+                <!-- NEW: Billing Summary -->
+                <div class="billing-summary">
+                    <h3>Bill Details</h3>
+                    <div class="billing-row">
+                        <span>Item Total</span>
+                        <span id="billing-item-total">₹0</span>
+                    </div>
+                    <div class="billing-row">
+                        <span>Sample Collection Fee</span>
+                        <span id="billing-delivery-fee">₹50</span>
+                    </div>
+                    <div class="billing-row billing-total">
+                        <span>To Pay</span>
+                        <span id="billing-to-pay">₹50</span>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px;">Patient & Address Details</h3>
+                <form id="checkout-form">
+                    <div id="checkout-form-grid">
+                        <div class="form-group full-width">
+                            <label for="form-name">Full Name</label>
+                            <input type="text" id="form-name" required placeholder="Enter full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-mobile">Mobile Number</label>
+                            <input type="text" id="form-mobile" required placeholder="Enter 10-digit mobile number">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-email">Email</label>
+                            <input type="text" id="form-email" placeholder="Enter email (optional)">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="form-address">Full Address</label>
+                            <textarea id="form-address" rows="3" required
+                                placeholder="Enter house no, street, city, pincode"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="checkout-cancel-btn">Cancel</button>
+                <button class="btn-green icon-text" id="checkout-submit-btn">
+                    <span class="material-symbols-outlined">check_circle</span>
+                    Place Order
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NEW: BOTTOM NAVIGATION BAR (Mobile Only) -->
+    <div id="bottom-nav">
+        <div class="nav-item active" data-action="nav-home">
+            <span class="material-symbols-outlined">home</span>
+            <span class="nav-label">Home</span>
+        </div>
+        <div class="nav-item" data-action="nav-search">
+            <span class="material-symbols-outlined">search</span>
+            <span class="nav-label">Search</span>
+        </div>
+        <div class="nav-item" data-action="nav-cart">
+            <span class="material-symbols-outlined">shopping_bag</span>
+            <span class="nav-label">Cart</span>
+            <span id="nav-cart-badge" class="nav-badge">0</span>
+        </div>
+    </div>
+
+
+    <script>
+        // --- 1. GLOBAL "DATABASE" (NEW MODEL) ---
+        let appDatabase = {
+            labs: [
+                { id: "l1", name: "Thyrocare", logoS3Path: "1750842050962.png" },
+                { id: "l2", name: "Redcliff", logoS3Path: "1750842190302.png" },
+                { id: "l3", name: "Dr.Lal Pathlab", logoS3Path: "1750842351577.png" },
+                { id: "l4", name: "Metropolis", logoS3Path: "1751435827928.png" },
+                { id: "l5", name: "Krishna Lab", logoS3Path: "1750842438534.png" }
+            ],
+            tests: [
+                {
+                    id: "t1", name: "Routine Urine Analysis", sampleType: "URINE",
+                    testMappedLabs: [
+                        { labId: "l1", mrp: 180, discountPrice: 171 },
+                        { labId: "l2", mrp: 169, discountPrice: 99 },
+                        { labId: "l3", mrp: 120, discountPrice: 114 },
+                        { labId: "l4", mrp: 190, discountPrice: 181 },
+                        { labId: "l5", mrp: 130, discountPrice: 123 }
+                    ]
+                },
+                {
+                    id: "t2", name: "Complete Blood Count (CBC)", sampleType: "BLOOD",
+                    testMappedLabs: [
+                        { labId: "l1", mrp: 300, discountPrice: 250 },
+                        { labId: "l2", mrp: 280, discountPrice: 200 },
+                        { labId: "l3", mrp: 320, discountPrice: 300 }
+                    ]
+                },
+                {
+                    id: "t3", name: "Blood Sugar (Fasting)", sampleType: "BLOOD",
+                    testMappedLabs: [
+                        { labId: "l1", mrp: 100, discountPrice: 80 },
+                        { labId: "l2", mrp: 120, discountPrice: 90 },
+                        { labId: "l3", mrp: 110, discountPrice: 100 }
+                    ]
+                },
+                {
+                    id: "t4", name: "HbA1c", sampleType: "BLOOD",
+                    testMappedLabs: [
+                        { labId: "l1", mrp: 400, discountPrice: 350 },
+                        { labId: "l2", mrp: 420, discountPrice: 380 },
+                    ]
+                },
+                {
+                    id: "t5", name: "Lipid Profile (Full)", sampleType: "BLOOD",
+                    testMappedLabs: [
+                        { labId: "l1", mrp: 600, discountPrice: 500 },
+                        { labId: "l2", mrp: 650, discountPrice: 550 },
+                        { labId: "l4", mrp: 700, discountPrice: 600 }
+                    ]
+                },
+                {
+                    id: "t6", name: "Kidney Function Test (KFT)", sampleType: "BLOOD",
+                    testMappedLabs: [
+                        { labId: "l1", mrp: 500, discountPrice: 400 },
+                        { labId: "l3", mrp: 550, discountPrice: 450 },
+                    ]
+                },
+                {
+                    id: "t7", name: "Liver Function Test (LFT)", sampleType: "BLOOD",
+                    testMappedLabs: [
+                        { labId: "l1", mrp: 550, discountPrice: 450 },
+                        { labId: "l3", mrp: 600, discountPrice: 500 },
+                    ]
+                }
+            ],
+            profiles: [
+                { id: "p1", name: "Diabetic Profile (Mini)", testIds: ["t3", "t4"] },
+                { id: "p2", name: "Full Lipid Profile", testIds: ["t5"] }
+            ],
+            packages: [
+                {
+                    id: "pkg1",
+                    name: "Basic Health Checkup",
+                    labId: "l1", // Thyrocare
+                    mrp: 1500,
+                    discountPrice: 999,
+                    profileIds: ["p2"], // Full Lipid
+                    testIds: ["t2", "t3"], // CBC + Fasting Sugar
+                    description: "Our essential package covers the fundamentals of your health, including blood counts, heart risk (Lipid Profile), and diabetes screening.",
+                    who_is_it_for: "Adults under 30 or anyone looking for a routine annual checkup."
+                },
+                {
+                    id: "pkg2",
+                    name: "Advanced Full Body Checkup",
+                    labId: "l2", // Redcliff
+                    mrp: 3500,
+                    discountPrice: 2499,
+                    profileIds: ["p1", "p2"], // Diabetic + Lipid
+                    testIds: ["t2", "t6", "t7"], // + CBC, KFT, LFT
+                    description: "A comprehensive, 360-degree view of your health. This package includes a wide range of tests for vital organs and functions.",
+                    who_is_it_for: "Adults over 30 or anyone wanting a deep dive into their health status."
+                }
+            ],
+            // --- NEW: Re-added categories for the customer UI ---
+            categories: [
+                { id: "cat1", name: "Full Body", icon: "health_and_safety", query: "Checkup" },
+                { id: "cat2", name: "Heart", icon: "monitor_heart", query: "Lipid" },
+                { id: "cat3", name: "Diabetes", icon: "science", query: "Diabetes" },
+                { id: "cat6", name: "Kidney", icon: "water_drop", query: "Kidney" },
+                { id: "cat7", name: "Liver", icon: "biotech", query: "Liver" },
+                { id: "cat5", name: "Thyroid", icon: "science", query: "Thyroid" }
+            ]
+        };
+
+        // --- 2. CUSTOMER CART ---
+        let globalCart = []; // Will only store { type: 'package', id: 'pkg1' }
+
+        // --- 3. UTILITY & HELPER FUNCTIONS ---
+        const findLab = (id) => appDatabase.labs.find(l => l.id === id);
+        const findTest = (id) => appDatabase.tests.find(t => t.id === id);
+        const findProfile = (id) => appDatabase.profiles.find(p => p.id === id);
+        const findPackage = (id) => appDatabase.packages.find(p => p.id === id);
+
+        function getTestIdsFromProfile(profileId) {
+            const profile = findProfile(profileId);
+            return profile ? new Set(profile.testIds) : new Set();
+        }
+
+        function getTestIdsFromPackage(packageId) {
+            const pkg = findPackage(packageId);
+            if (!pkg) return new Set();
+
+            const uniqueTestIds = new Set(pkg.testIds);
+            pkg.profileIds.forEach(pId => {
+                getTestIdsFromProfile(pId).forEach(tId => uniqueTestIds.add(tId));
+            });
+            return uniqueTestIds;
+        }
+
+        // --- 4. SNACKBAR FUNCTION ---
+        function showSnackbar(message, type = 'success') {
+            const existingSnackbar = document.getElementById('snackbar');
+            if (existingSnackbar) { existingSnackbar.remove(); }
+            const snackbar = document.createElement('div');
+            snackbar.id = 'snackbar';
+            snackbar.className = `snackbar ${type} show`;
+            snackbar.textContent = message;
+            document.body.appendChild(snackbar);
+            setTimeout(() => {
+                snackbar.className = snackbar.className.replace('show', 'hide');
+                setTimeout(() => { if (snackbar.parentNode) { snackbar.parentNode.removeChild(snackbar); } }, 500);
+            }, 3000);
+        }
+
+        // --- 5. RENDER FUNCTIONS (ADMIN DASHBOARD) ---
+
+        function renderLabs(searchTerm = '') {
+            const list = document.getElementById('labs-list');
+            list.innerHTML = '';
+            const term = searchTerm.toLowerCase();
+            const filtered = appDatabase.labs.filter(l => l.name.toLowerCase().includes(term));
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<p>No labs found.</p>';
+                return;
+            }
+
+            filtered.forEach(lab => {
+                list.innerHTML += `
+                    <div class="item-card lab-card">
+                        <div class="lab-logo-container">
+                            ${lab.logoS3Path ?
+                        `<img src="https://placehold.co/100x100/eee/333?text=${lab.name.substring(0, 1)}" alt="${lab.name}">` :
+                        '<span class="material-symbols-outlined">business</span>'
+                    }
+                        </div>
+                        <div class="lab-info">
+                            <h3>${lab.name}</h3>
+                        </div>
+                        <button class="btn-edit icon-text" data-action="editLab" data-id="${lab.id}">
+                            <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function renderProfiles(searchTerm = '') {
+            const list = document.getElementById('profiles-list');
+            list.innerHTML = '';
+            const term = searchTerm.toLowerCase();
+            const filtered = appDatabase.profiles.filter(p => p.name.toLowerCase().includes(term));
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<p>No profiles found.</p>';
+                return;
+            }
+
+            filtered.forEach(profile => {
+                let testsHtml = '<ul>';
+                if (profile.testIds.length > 0) {
+                    profile.testIds.forEach(testId => {
+                        const test = findTest(testId);
+                        if (test) testsHtml += `<li>${test.name}</li>`;
+                    });
+                } else {
+                    testsHtml = "<ul><li>No tests mapped.</li></ul>";
+                }
+                testsHtml += '</ul>';
+
+                list.innerHTML += `
+                    <div class="item-card">
+                        <div class="item-card-header">
+                            <h3>${profile.name}</h3>
+                        </div>
+                        <div class="item-card-body">
+                            <h4 style="margin: 0 0 5px 0;">Includes (${profile.testIds.length} tests):</h4>
+                            ${testsHtml}
+                        </div>
+                        <div class="item-card-footer">
+                             <button class="btn-edit icon-text" data-action="editProfile" data-id="${profile.id}">
+                                <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderPackages(searchTerm = '') {
+            const list = document.getElementById('packages-list');
+            list.innerHTML = '';
+            const term = searchTerm.toLowerCase();
+            const filtered = appDatabase.packages.filter(p => p.name.toLowerCase().includes(term));
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<p>No packages found.</p>';
+                return;
+            }
+
+            filtered.forEach(pkg => {
+                const lab = findLab(pkg.labId);
+                const testCount = getTestIdsFromPackage(pkg.id).size;
+                list.innerHTML += `
+                    <div class="item-card">
+                        <div class="item-card-header">
+                            <h3>${pkg.name}</h3>
+                            <span class="price">₹${pkg.discountPrice} <span class="mrp">₹${pkg.mrp}</span></span>
+                        </div>
+                        <div class="item-card-body">
+                           <p style="margin: 0 0 10px 0;">
+                                <span class="badge-lab">${lab ? lab.name : 'No Lab'}</span>
+                           </p>
+                           <p style="font-size: 0.9em; color: #333;">
+                                Includes <strong>${testCount}</strong> unique tests.
+                           </p>
+                        </div>
+                        <div class="item-card-footer">
+                             <button class="btn-edit icon-text" data-action="editPackage" data-id="${pkg.id}">
+                                <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderTests(searchTerm = '') {
+            const list = document.getElementById('tests-list');
+            list.innerHTML = '';
+            const term = searchTerm.toLowerCase();
+            const filtered = appDatabase.tests.filter(t => t.name.toLowerCase().includes(term));
+
+            if (filtered.length === 0) {
+                list.innerHTML = '<p>No tests found.</p>';
+                return;
+            }
+
+            filtered.forEach(test => {
+                list.innerHTML += `
+                    <div class="item-card">
+                        <div class="item-card-header">
+                            <h3>${test.name}</h3>
+                        </div>
+                        <div class="item-card-body">
+                           <p style="margin: 0; font-size: 0.9em; color: #333;">
+                           Sample: <strong>${test.sampleType || 'N/A'}</strong> <br>
+                           Mapped to <strong>${test.testMappedLabs.length}</strong> labs.
+                           </p>
+                        </div>
+                        <div class="item-card-footer">
+                             <button class="btn-edit icon-text" data-action="editTest" data-id="${test.id}">
+                                <span class="material-symbols-outlined" style="font-size: 16px;">edit</span>
+                                Edit
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderAllAdmin() {
+            renderLabs(document.getElementById('labs-search').value);
+            renderProfiles(document.getElementById('profiles-search').value);
+            renderPackages(document.getElementById('packages-search').value);
+            renderTests(document.getElementById('tests-search').value);
+        }
+
+        // --- 6. RENDER FUNCTIONS (CUSTOMER LANDING PAGE) ---
+
+        function renderFeaturedPackages() {
+            const grid = document.getElementById('package-grid');
+            grid.innerHTML = '';
+            if (appDatabase.packages.length === 0) {
+                grid.innerHTML = '<p>No featured packages are available.</p>';
+                return;
+            }
+
+            appDatabase.packages.forEach(pkg => {
+                const lab = findLab(pkg.labId);
+                const uniqueTestIds = getTestIdsFromPackage(pkg.id);
+                const isInCart = globalCart.some(item => item.id === pkg.id);
+
+                let cartButtonHtml = '';
+                if (isInCart) {
+                    cartButtonHtml = `
+                        <button class="btn-tertiary icon-text" data-action="removeFromCart" data-type="package" data-id="${pkg.id}">
+                            <span class="material-symbols-outlined">remove_shopping_cart</span>
+                            Remove
+                        </button>
+                        <button class="btn-green icon-text" disabled>
+                            <span class="material-symbols-outlined">check</span>
+                            Added
+                        </button>
+                    `;
+                } else {
+                    cartButtonHtml = `
+                        <button class="btn-green icon-text" data-action="addToCart" data-type="package" data-id="${pkg.id}">
+                            <span class="material-symbols-outlined">add_shopping_cart</span>
+                            Add to Cart
+                        </button>
+                    `;
+                }
+
+                grid.innerHTML += `
+                    <div class="package-display-card card">
+                        <div class="card-content">
+                            <h3>${pkg.name}</h3>
+                            <div class="lab-name icon-text">
+                                <span class="material-symbols-outlined">business</span>
+                                ${lab ? lab.name : 'TopLabs'}
+                            </div>
+                            <!-- UPDATED: Polished "details" row -->
+                            <div class="details">
+                                <span class="material-symbols-outlined">science</span>
+                                Includes ${uniqueTestIds.size} unique tests
+                            </div>
+                            <div class="price">
+                                ₹${pkg.discountPrice}
+                                <span class="mrp">₹${pkg.mrp}</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn-tertiary icon-text" data-action="viewDetails" data-type="package" data-id="${pkg.id}">
+                                <span class="material-symbols-outlined">visibility</span>
+                                View Details
+                            </button>
+                            ${cartButtonHtml}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // --- NEW: Render Categories ---
+        function renderCategories() {
+            const grid = document.getElementById('category-grid');
+            grid.innerHTML = '';
+            appDatabase.categories.forEach(cat => {
+                grid.innerHTML += `
+                    <div class="category-card" data-action="searchCategory" data-query="${cat.query}">
+                        <div class="icon-container">
+                            <span class="material-symbols-outlined">${cat.icon}</span>
+                        </div>
+                        <p>${cat.name}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function renderCustomerView() {
+            renderFeaturedPackages();
+            renderCategories(); // Also render the new category grid
+        }
+
+        // --- 7. ADMIN MODAL LOGIC ---
+        const adminModal = document.getElementById('admin-modal');
+        const adminModalTitle = document.getElementById('admin-modal-title');
+        const adminModalBody = document.getElementById('admin-modal-body');
+        const adminModalSaveBtn = document.getElementById('admin-modal-save-btn');
+        const adminModalDeleteBtn = document.getElementById('admin-modal-delete-btn');
+
+        function closeAdminModal() {
+            adminModal.style.display = 'none';
+            adminModalSaveBtn.onclick = null;
+            adminModalDeleteBtn.onclick = null;
+            adminModalDeleteBtn.style.display = 'none';
+        }
+
+        function openAdminModal(action, id = null, returnTo = null) {
+            adminModalBody.innerHTML = '';
+            let titleIcon = 'edit_note';
+            let titleText = 'Edit Item';
+            adminModalDeleteBtn.style.display = id ? 'inline-block' : 'none';
+
+            switch (action) {
+                // --- LAB MODAL ---
+                case 'addLab':
+                case 'editLab':
+                    const lab = action === 'editLab' ? findLab(id) : null;
+                    titleText = lab ? 'Edit Lab' : 'Add New Lab';
+                    titleIcon = 'business';
+                    adminModalBody.innerHTML = `
+                        <div class="form-group">
+                            <label for="form-lab-name">Lab Name</label>
+                            <input type="text" id="form-lab-name" value="${lab ? lab.name : ''}" placeholder="e.g. Thyrocare">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-lab-logo">Logo S3 Path (Optional)</label>
+                            <input type="text" id="form-lab-logo" value="${lab ? lab.logoS3Path : ''}" placeholder="e.g. 1750842050962.png">
+                        </div>
+                    `;
+                    adminModalSaveBtn.onclick = () => saveLab(id, returnTo);
+                    if (id) adminModalDeleteBtn.onclick = () => deleteItem('lab', id);
+                    break;
+
+                // --- TEST MODAL ---
+                case 'addTest':
+                case 'editTest':
+                    const test = action === 'editTest' ? findTest(id) : null;
+                    titleText = test ? 'Edit Test' : 'Add New Test';
+                    titleIcon = 'science';
+
+                    let labMappingsHtml = appDatabase.labs.map(lab => {
+                        const mapping = test ? test.testMappedLabs.find(m => m.labId === lab.id) : null;
+                        return `
+                            <div class="lab-mapping-item">
+                                <label>${lab.name}</label>
+                                <div class="form-grid-2">
+                                     <div class="form-group">
+                                        <label for="form-test-mrp-${lab.id}">MRP (₹)</label>
+                                        <input type="number" class="lab-mapping-input" data-lab-id="${lab.id}" data-type="mrp" id="form-test-mrp-${lab.id}" value="${mapping ? mapping.mrp : ''}" placeholder="e.g. 180">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="form-test-discount-${lab.id}">Discount Price (₹)</label>
+                                        <input type="number" class="lab-mapping-input" data-lab-id="${lab.id}" data-type="discountPrice" id="form-test-discount-${lab.id}" value="${mapping ? mapping.discountPrice : ''}" placeholder="e.g. 99">
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    adminModalBody.innerHTML = `
+                        <div class="form-group">
+                            <label for="form-test-name">Test Name</label>
+                            <input type="text" id="form-test-name" value="${test ? test.name : ''}" placeholder="e.g. Routine Urine Analysis">
+                        </div>
+                        <div class="form-group">
+                            <label for="form-test-sample">Sample Type</label>
+                            <input type="text" id="form-test-sample" value="${test ? test.sampleType : ''}" placeholder="e.g. BLOOD">
+                        </div>
+                        <hr style="margin: 20px 0;">
+                        <h4>Lab Pricing (Enter price to map)</h4>
+                        <div class="mapping-container">
+                            ${labMappingsHtml || '<p>No labs found. Please add labs first.</p>'}
+                        </div>
+                    `;
+                    adminModalSaveBtn.onclick = () => saveTest(id, returnTo);
+                    if (id) adminModalDeleteBtn.onclick = () => deleteItem('test', id);
+                    break;
+
+                // --- PROFILE MODAL ---
+                case 'addProfile':
+                case 'editProfile':
+                    const profile = action === 'editProfile' ? findProfile(id) : null;
+                    titleText = profile ? 'Edit Profile' : 'Add New Profile';
+                    titleIcon = 'collections_bookmark';
+
+                    let testsHtml = appDatabase.tests.map(test => {
+                        const isChecked = profile ? profile.testIds.includes(test.id) : false;
+                        return `
+                            <div class="mapping-item">
+                                <input type="checkbox" class="mapping-checkbox" id="map-test-${test.id}" data-id="${test.id}" ${isChecked ? 'checked' : ''}>
+                                <label for="map-test-${test.id}">${test.name}</label>
+                            </div>
+                        `;
+                    }).join('');
+
+                    adminModalBody.innerHTML = `
+                        <div class="form-group">
+                            <label for="form-profile-name">Profile Name</label>
+                            <input type="text" id="form-profile-name" value="${profile ? profile.name : ''}" placeholder="e.g. Diabetic Profile (Mini)">
+                        </div>
+                        <div class="form-group">
+                            <label>Map Tests to this Profile</label>
+                            <!-- NEW: Search bar for tests -->
+                            <input type="search" class="admin-search-bar" id="test-profile-mapping-search" placeholder="Search tests to map..." style="margin-bottom: 15px;">
+                            <div class="mapping-container" id="test-profile-mapping-container">${testsHtml}</div>
+                        </div>
+                    `;
+                    adminModalSaveBtn.onclick = () => saveProfile(id, returnTo);
+                    if (id) adminModalDeleteBtn.onclick = () => deleteItem('profile', id);
+
+                    // --- NEW: Add test mapping search filter ---
+                    const testProfileSearch = adminModalBody.querySelector('#test-profile-mapping-search');
+                    if (testProfileSearch) {
+                        testProfileSearch.addEventListener('input', (e) => {
+                            const term = e.target.value.toLowerCase();
+                            adminModalBody.querySelectorAll('#test-profile-mapping-container .mapping-item').forEach(item => {
+                                const label = item.querySelector('label').textContent.toLowerCase();
+                                item.style.display = label.includes(term) ? 'flex' : 'none';
+                            });
+                        });
+                    }
+                    break;
+
+                // --- PACKAGE MODAL ---
+                case 'addPackage':
+                case 'editPackage':
+                    const pkg = action === 'editPackage' ? findPackage(id) : null;
+                    titleText = pkg ? 'Edit Package' : 'Add New Package';
+                    titleIcon = 'inventory_2';
+                    const currentPackageId = id; // Store id for returnTo logic
+
+                    let labOptions = appDatabase.labs.map(lab => {
+                        const isSelected = pkg ? pkg.labId === lab.id : false;
+                        return `<option value="${lab.id}" ${isSelected ? 'selected' : ''}>${lab.name}</option>`;
+                    }).join('');
+
+                    let profilesHtml = appDatabase.profiles.map(p => {
+                        const isChecked = pkg ? pkg.profileIds.includes(p.id) : false;
+                        return `
+                            <div class="mapping-item">
+                                <input type="checkbox" class="mapping-checkbox" data-type="profile" id="map-profile-${p.id}" data-id="${p.id}" ${isChecked ? 'checked' : ''}>
+                                <label for="map-profile-${p.id}">${p.name}</label>
+                            </div>
+                        `;
+                    }).join('');
+
+                    let individualTestsHtml = appDatabase.tests.map(t => {
+                        const isChecked = pkg ? pkg.testIds.includes(t.id) : false;
+                        return `
+                            <div class="mapping-item">
+                                <input type="checkbox" class="mapping-checkbox" data-type="test" id="map-pkg-test-${t.id}" data-id="${t.id}" ${isChecked ? 'checked' : ''}>
+                                <label for="map-pkg-test-${t.id}">${t.name}</label>
+                            </div>
+                        `;
+                    }).join('');
+
+                    adminModalBody.innerHTML = `
+                        <div class="modal-tabs">
+                            <span class="tab-link active" data-tab="tab-basic">Basic Info & Price</span>
+                            <span class="tab-link" data-tab="tab-profiles">Map Profiles</span>
+                            <span class="tab-link" data-tab="tab-tests">Map Individual Tests</span>
+                        </div>
+                        
+                        <div id="tab-basic" class="tab-content active">
+                            <div class="form-group">
+                                <label for="form-package-name">Package Name</label>
+                                <input type="text" id="form-package-name" value="${pkg ? pkg.name : ''}" placeholder="e.g. Basic Health Checkup">
+                            </div>
+                            <div class="form-group">
+                                <label for="form-package-lab">Select Lab</label>
+                                <select id="form-package-lab">
+                                    <option value="">-- Select a Lab --</option>
+                                    ${labOptions}
+                                </select>
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label for="form-package-mrp">MRP (₹)</label>
+                                    <input type="number" id="form-package-mrp" value="${pkg ? pkg.mrp : ''}" placeholder="e.g. 1500">
+                                </div>
+                                <div class="form-group">
+                                    <label for="form-package-discount">Discount Price (₹)</label>
+                                    <input type="number" id="form-package-discount" value="${pkg ? pkg.discountPrice : ''}" placeholder="e.g. 999">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-package-desc">Description (Optional)</label>
+                                <textarea id="form-package-desc" rows="3">${pkg ? pkg.description : ''}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="form-package-who">Who is it for? (Optional)</label>
+                                <textarea id="form-package-who" rows="2">${pkg ? pkg.who_is_it_for : ''}</textarea>
+                            </div>
+                        </div>
+                        
+                        <div id="tab-profiles" class="tab-content">
+                            <div class="form-group">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                    <label>Select Profiles to include:</label>
+                                    <button class="btn-tertiary icon-text" id="add-profile-from-package-btn" style="font-size: 13px; padding: 6px 10px;">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">add</span> New Profile
+                                    </button>
+                                </div>
+                                <input type="search" class="admin-search-bar" id="profile-mapping-search" placeholder="Search profiles to map..." style="margin-bottom: 15px;">
+                                <div class="mapping-container" id="profile-mapping-container">${profilesHtml}</div>
+                            </div>
+                        </div>
+                        
+                        <div id="tab-tests" class="tab-content">
+                            <div class="form-group">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                    <label>Select Individual Tests to add:</label>
+                                    <button class="btn-tertiary icon-text" id="add-test-from-package-btn" style="font-size: 13px; padding: 6px 10px;">
+                                        <span class="material-symbols-outlined" style="font-size: 16px;">add</span> New Test
+                                    </button>
+                                </div>
+                                <input type="search" class="admin-search-bar" id="test-mapping-search" placeholder="Search tests to map..." style="margin-bottom: 15px;">
+                                <div class="mapping-container" id="test-mapping-container">${individualTestsHtml}</div>
+                            </div>
+                        </div>
+                    `;
+
+                    // Activate tab switching
+                    adminModalBody.querySelectorAll('.tab-link').forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            adminModalBody.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+                            adminModalBody.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                            e.target.classList.add('active');
+                            document.getElementById(e.target.dataset.tab).classList.add('active');
+                        });
+                    });
+
+                    // --- NEW: Add-on-the-fly Listeners ---
+                    const addProfileBtn = adminModalBody.querySelector('#add-profile-from-package-btn');
+                    if (addProfileBtn) {
+                        addProfileBtn.addEventListener('click', () => {
+                            openAdminModal('addProfile', null, { action: action, id: currentPackageId });
+                        });
+                    }
+
+                    const addTestBtn = adminModalBody.querySelector('#add-test-from-package-btn');
+                    if (addTestBtn) {
+                        addTestBtn.addEventListener('click', () => {
+                            openAdminModal('addTest', null, { action: action, id: currentPackageId });
+                        });
+                    }
+
+                    // --- NEW: Add mapping search filters ---
+                    const profileSearch = adminModalBody.querySelector('#profile-mapping-search');
+                    if (profileSearch) {
+                        profileSearch.addEventListener('input', (e) => {
+                            const term = e.target.value.toLowerCase();
+                            adminModalBody.querySelectorAll('#profile-mapping-container .mapping-item').forEach(item => {
+                                const label = item.querySelector('label').textContent.toLowerCase();
+                                item.style.display = label.includes(term) ? 'flex' : 'none';
+                            });
+                        });
+                    }
+
+                    const testSearch = adminModalBody.querySelector('#test-mapping-search');
+                    if (testSearch) {
+                        testSearch.addEventListener('input', (e) => {
+                            const term = e.target.value.toLowerCase();
+                            adminModalBody.querySelectorAll('#test-mapping-container .mapping-item').forEach(item => {
+                                const label = item.querySelector('label').textContent.toLowerCase();
+                                item.style.display = label.includes(term) ? 'flex' : 'none';
+                            });
+                        });
+                    }
+
+                    adminModalSaveBtn.onclick = () => savePackage(id, returnTo);
+                    if (id) adminModalDeleteBtn.onclick = () => deleteItem('package', id);
+                    break;
+            }
+            adminModalTitle.innerHTML = `<span class="material-symbols-outlined">${titleIcon}</span> ${titleText}`;
+            adminModal.style.display = 'block';
+        }
+
+        // --- 8. SAVE HANDLERS (ADMIN) ---
+        function saveLab(id, returnTo = null) {
+            const name = document.getElementById('form-lab-name').value;
+            const logoS3Path = document.getElementById('form-lab-logo').value;
+            if (!name) {
+                showSnackbar('Lab Name is required.', 'error'); return;
+            }
+            if (id) {
+                const lab = findLab(id);
+                lab.name = name; lab.logoS3Path = logoS3Path;
+            } else {
+                appDatabase.labs.push({ id: `l${Date.now()}`, name, logoS3Path });
+            }
+            renderAllAdmin();
+            renderCustomerView();
+            showSnackbar(id ? 'Lab Updated' : 'Lab Added', 'success');
+            if (returnTo) {
+                openAdminModal(returnTo.action, returnTo.id, returnTo.returnTo);
+            } else {
+                closeAdminModal();
+            }
+        }
+
+        function saveTest(id, returnTo = null) {
+            const name = document.getElementById('form-test-name').value;
+            const sampleType = document.getElementById('form-test-sample').value;
+            if (!name) {
+                showSnackbar('Test Name is required.', 'error'); return;
+            }
+
+            const testMappedLabs = [];
+            document.querySelectorAll('.lab-mapping-input[data-type="discountPrice"]').forEach(input => {
+                const labId = input.dataset.labId;
+                const discountPrice = parseInt(input.value, 10);
+                const mrpEl = document.getElementById(`form-test-mrp-${labId}`);
+                const mrp = parseInt(mrpEl.value, 10);
+
+                if (discountPrice && mrp) {
+                    testMappedLabs.push({ labId, mrp, discountPrice });
+                }
+            });
+
+            if (id) {
+                const test = findTest(id);
+                test.name = name; test.sampleType = sampleType; test.testMappedLabs = testMappedLabs;
+            } else {
+                appDatabase.tests.push({ id: `t${Date.now()}`, name, sampleType, testMappedLabs });
+            }
+            renderAllAdmin();
+            renderCustomerView();
+            showSnackbar(id ? 'Test Updated' : 'Test Added', 'success');
+            if (returnTo) {
+                openAdminModal(returnTo.action, returnTo.id, returnTo.returnTo);
+            } else {
+                closeAdminModal();
+            }
+        }
+
+        function saveProfile(id, returnTo = null) {
+            const name = document.getElementById('form-profile-name').value;
+            if (!name) {
+                showSnackbar('Profile Name is required.', 'error'); return;
+            }
+            const mappedTestIds = Array.from(document.querySelectorAll('#test-profile-mapping-container .mapping-checkbox:checked')).map(cb => cb.dataset.id);
+            if (id) {
+                const profile = findProfile(id);
+                profile.name = name; profile.testIds = mappedTestIds;
+            } else {
+                appDatabase.profiles.push({ id: `p${Date.now()}`, name, testIds: mappedTestIds });
+            }
+            renderAllAdmin();
+            renderCustomerView();
+            showSnackbar(id ? 'Profile Updated' : 'Profile Added', 'success');
+            if (returnTo) {
+                openAdminModal(returnTo.action, returnTo.id, returnTo.returnTo);
+            } else {
+                closeAdminModal();
+            }
+        }
+
+        function savePackage(id, returnTo = null) {
+            const name = document.getElementById('form-package-name').value;
+            const labId = document.getElementById('form-package-lab').value;
+            const mrp = parseInt(document.getElementById('form-package-mrp').value, 10);
+            const discountPrice = parseInt(document.getElementById('form-package-discount').value, 10);
+            const description = document.getElementById('form-package-desc').value;
+            const who_is_it_for = document.getElementById('form-package-who').value;
+
+            if (!name || !labId || !mrp || !discountPrice) {
+                showSnackbar('Package Name, Lab, MRP, and Discount Price are required.', 'error'); return;
+            }
+
+            const mappedProfileIds = Array.from(document.querySelectorAll('#profile-mapping-container .mapping-checkbox:checked')).map(cb => cb.dataset.id);
+            const mappedTestIds = Array.from(document.querySelectorAll('#test-mapping-container .mapping-checkbox:checked')).map(cb => cb.dataset.id);
+
+            if (id) {
+                const pkg = findPackage(id);
+                pkg.name = name; pkg.labId = labId; pkg.mrp = mrp; pkg.discountPrice = discountPrice;
+                pkg.description = description; pkg.who_is_it_for = who_is_it_for;
+                pkg.profileIds = mappedProfileIds; pkg.testIds = mappedTestIds;
+            } else {
+                appDatabase.packages.push({ id: `pkg${Date.now()}`, name, labId, mrp, discountPrice, description, who_is_it_for, profileIds: mappedProfileIds, testIds: mappedTestIds });
+            }
+            renderAllAdmin();
+            renderCustomerView();
+            showSnackbar(id ? 'Package Updated' : 'Package Added', 'success');
+            if (returnTo) {
+                openAdminModal(returnTo.action, returnTo.id, returnTo.returnTo);
+            } else {
+                closeAdminModal();
+            }
+        }
+
+        function deleteItem(type, id) {
+            // Note: A real app would need confirmation.
+            let itemName = 'Item';
+            if (type === 'lab') {
+                appDatabase.labs = appDatabase.labs.filter(i => i.id !== id);
+                itemName = 'Lab';
+            } else if (type === 'test') {
+                appDatabase.tests = appDatabase.tests.filter(i => i.id !== id);
+                itemName = 'Test';
+            } else if (type === 'profile') {
+                appDatabase.profiles = appDatabase.profiles.filter(i => i.id !== id);
+                itemName = 'Profile';
+            } else if (type === 'package') {
+                appDatabase.packages = appDatabase.packages.filter(i => i.id !== id);
+                itemName = 'Package';
+            }
+
+            renderAllAdmin();
+            renderCustomerView();
+            closeAdminModal();
+            showSnackbar(`${itemName} Deleted`, 'success');
+        }
+
+        // --- 9. CUSTOMER "VIEW DETAILS" MODAL ---
+        const detailsModal = document.getElementById('details-modal');
+        const detailsModalTitle = document.getElementById('details-modal-title');
+        const detailsModalBody = document.getElementById('details-modal-body');
+
+        function openDetailsModal(type, id) {
+            let item, title, titleIcon, html;
+
+            if (type === 'package') {
+                item = findPackage(id);
+                title = item.name;
+                titleIcon = 'inventory_2';
+                const lab = findLab(item.labId);
+
+                const uniqueTestIds = getTestIdsFromPackage(id);
+                let testsHtml = Array.from(uniqueTestIds).map(tId => {
+                    const test = findTest(tId);
+                    return test ? `<li><span>${test.name}</span></li>` : '';
+                }).join('');
+
+                html = `
+                    <div class="detail-section">
+                        <p>${item.description || 'No description available.'}</p>
+                        <ul class="detail-list">
+                            <li><span>Price</span> 
+                                <span class="price">₹${item.discountPrice} <span class="mrp">₹${item.mrp}</span></span>
+                            </li>
+                            <li><span>Lab</span> 
+                                <span>${lab ? lab.name : 'N/A'}</span>
+                            </li>
+                            <li><span>Total Unique Tests</span> <span>${uniqueTestIds.size}</span></li>
+                        </ul>
+                    </div>
+                    <div class="detail-section">
+                        <h3 class="icon-text"><span class="material-symbols-outlined">person</span>Who is this package for?</h3>
+                        <p>${item.who_is_it_for || 'Consult your doctor.'}</p>
+                    </div>
+                    <div class="detail-section">
+                        <h3 class="icon-text"><span class="material-symbols-outlined">list_alt</span>Tests Included (${uniqueTestIds.size})</h3>
+                        <ul class="detail-list">${testsHtml}</ul>
+                    </div>
+                `;
+            } else {
+                // Details for other types not implemented for customer view
+                return;
+            }
+
+            detailsModalTitle.innerHTML = `<span class="material-symbols-outlined">${titleIcon}</span> ${title}`;
+            detailsModalBody.innerHTML = html;
+            detailsModal.style.display = 'block';
+        }
+
+        function closeDetailsModal() {
+            detailsModal.style.display = 'none';
+        }
+
+        // --- 10. CUSTOMER SEARCH LOGIC ---
+        const searchBar = document.getElementById('search-bar');
+        const clearSearchBtn = document.getElementById('clear-search-btn');
+        const resultsContainer = document.getElementById('search-results-container');
+
+        function handleSearch() {
+            const term = searchBar.value.toLowerCase().trim();
+            clearSearchBtn.style.display = term.length > 0 ? 'block' : 'none';
+            if (term.length < 2) {
+                resultsContainer.style.display = 'none';
+                resultsContainer.innerHTML = '';
+                return;
+            }
+            resultsContainer.style.display = 'block';
+            resultsContainer.innerHTML = '';
+
+            // Customer view ONLY searches packages
+            const packages = appDatabase.packages.filter(p => p.name.toLowerCase().includes(term));
+
+            let resultsHtml = '';
+
+            packages.forEach(item => {
+                const lab = findLab(item.labId);
+                const testCount = getTestIdsFromPackage(item.id).size;
+                const isInCart = globalCart.some(cartItem => cartItem.id === item.id);
+
+                let cartButtonHtml = '';
+                if (isInCart) {
+                    cartButtonHtml = `
+                        <button class="btn-tertiary icon-text" data-action="removeFromCart" data-type="package" data-id="${item.id}">
+                            <span class="material-symbols-outlined">remove_shopping_cart</span>
+                            Remove
+                        </button>
+                        <button class="btn-green icon-text" disabled>
+                            <span class="material-symbols-outlined">check</span>
+                            Added
+                        </button>
+                    `;
+                } else {
+                    cartButtonHtml = `
+                        <button class="btn-green icon-text" data-action="addToCart" data-type="package" data-id="${item.id}">
+                            <span class="material-symbols-outlined">add_shopping_cart</span>
+                            Add
+                        </button>
+                    `;
+                }
+
+                resultsHtml += `
+                    <div class="search-result-card">
+                        <div class="info">
+                            <span class="badge badge-package">Package</span>
+                            <h3>${item.name}</h3>
+                            <p>
+                                <span class="badge-lab" style="font-size: 0.9em;">${lab ? lab.name : 'N/A'}</span>
+                                Includes ${testCount} unique tests
+                            </p>
+                            <div class="price">₹${item.discountPrice} <span class="mrp">₹${item.mrp}</span></div>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-tertiary icon-text" data-action="viewDetails" data-type="package" data-id="${item.id}">
+                                <span class="material-symbols-outlined">visibility</span> View
+                            </button>
+                            ${cartButtonHtml}
+                        </div>
+                    </div>
+                `;
+            });
+
+            if (resultsHtml === '') {
+                resultsContainer.innerHTML = '<p style="text-align: center;">No packages found for "' + term + '".</p>';
+            } else {
+                resultsContainer.innerHTML = `<h3>Search Results</h3>${resultsHtml}`;
+            }
+        }
+        function clearSearch() {
+            searchBar.value = '';
+            handleSearch();
+        }
+
+        // --- 11. CUSTOMER CART & CHECKOUT LOGIC ---
+        const cartBtn = document.getElementById('cart-btn');
+        const checkoutModal = document.getElementById('checkout-modal');
+        const bottomNavCartBadge = document.getElementById('nav-cart-badge');
+
+        function updateCartCount() {
+            // Update header button
+            cartBtn.innerHTML = `
+                <span class="material-symbols-outlined">shopping_bag</span>
+                Cart (${globalCart.length})
+            `;
+
+            // NEW: Update bottom nav badge
+            if (globalCart.length > 0) {
+                bottomNavCartBadge.textContent = globalCart.length;
+                bottomNavCartBadge.style.display = 'flex';
+            } else {
+                bottomNavCartBadge.style.display = 'none';
+            }
+        }
+
+        function addToCart(type, id) {
+            // Only packages can be added to cart
+            if (type !== 'package') {
+                showSnackbar('Only packages can be added to the cart.', 'error');
+                return;
+            }
+            // Check if already in cart
+            if (globalCart.some(item => item.id === id)) {
+                showSnackbar('Item is already in your cart.', 'error');
+                return;
+            }
+            globalCart.push({ type, id });
+            updateCartCount();
+            const pkg = findPackage(id);
+            showSnackbar(`${pkg.name} added to cart!`, 'success');
+
+            // --- NEW: Re-render UI to show "Added" state
+            renderFeaturedPackages(); // Re-render packages
+            if (document.getElementById('search-results-container').style.display === 'block') {
+                handleSearch(); // Re-render search if open
+            }
+        }
+
+        // --- NEW: Remove From Cart Function ---
+        function removeFromCart(type, id) {
+            globalCart = globalCart.filter(item => item.id !== id);
+            updateCartCount();
+            showSnackbar('Item removed from cart', 'success');
+
+            // Re-render UI
+            renderFeaturedPackages();
+            if (document.getElementById('search-results-container').style.display === 'block') {
+                handleSearch();
+            }
+            // If checkout modal is open, refresh it
+            if (checkoutModal.style.display === 'block') {
+                openCheckoutModal();
+            }
+        }
+
+        function openCheckoutModal() {
+            const listEl = document.getElementById('cart-summary-list');
+            const itemTotalEl = document.getElementById('billing-item-total');
+            const deliveryFeeEl = document.getElementById('billing-delivery-fee');
+            const toPayEl = document.getElementById('billing-to-pay');
+
+            listEl.innerHTML = ''; // Clear old content
+
+            let total = 0;
+            const deliveryFee = 50; // Hardcoded fee as requested
+
+            if (globalCart.length === 0) {
+                listEl.innerHTML = '<p style="text-align: center; color: var(--tertiary-color);">Your cart is empty.</p>';
+            }
+
+            globalCart.forEach(item => {
+                const pkg = findPackage(item.id);
+                if (pkg) {
+                    const lab = findLab(pkg.labId);
+                    total += pkg.discountPrice;
+
+                    const itemCard = document.createElement('div');
+                    itemCard.className = 'cart-item-card';
+                    itemCard.innerHTML = `
+                        <div class="cart-item-info">
+                            <h4>${pkg.name}</h4>
+                            <p>Lab: ${lab ? lab.name : 'N/A'}</p>
+                        </div>
+                        <span class="cart-item-price">₹${pkg.discountPrice}</span>
+                        <button class="cart-item-remove icon-text" data-action="removeFromCart" data-type="package" data-id="${pkg.id}">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    `;
+                    listEl.appendChild(itemCard);
+                }
+            });
+
+            itemTotalEl.textContent = `₹${total}`;
+            deliveryFeeEl.textContent = `₹${deliveryFee}`;
+            toPayEl.textContent = `₹${total + deliveryFee}`;
+
+            // Handle remove buttons INSIDE the cart
+            listEl.querySelectorAll('.cart-item-remove').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const target = e.currentTarget;
+                    removeFromCart(target.dataset.type, target.dataset.id);
+                });
+            });
+
+            checkoutModal.style.display = 'block';
+        }
+
+        function closeCheckoutModal() {
+            checkoutModal.style.display = 'none';
+        }
+
+        function placeOrder() {
+            const name = document.getElementById('form-name').value;
+            const mobile = document.getElementById('form-mobile').value;
+            const address = document.getElementById('form-address').value;
+            if (!name || !mobile || !address) {
+                showSnackbar('Please fill in all required fields.', 'error');
+                return;
+            }
+            if (globalCart.length === 0) {
+                showSnackbar('Your cart is empty.', 'error');
+                return;
+            }
+            console.log("--- ORDER PLACED (SIMULATION) ---", {
+                customer: { name, mobile, address },
+                cart: globalCart,
+                total: document.getElementById('billing-to-pay').textContent
+            });
+            showSnackbar('Order Placed Successfully!', 'success');
+            globalCart = [];
+            updateCartCount();
+            closeCheckoutModal();
+            renderFeaturedPackages(); // Re-render packages to reset buttons
+        }
+
+        // --- 12. APP INITIALIZATION & EVENT LISTENERS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const adminView = document.getElementById('admin-view');
+            const customerView = document.getElementById('customer-view');
+            const toggleBtn = document.getElementById('toggle-view-btn');
+
+            // --- NEW: Mobile Admin Nav Logic ---
+            const adminMobileNav = document.getElementById('admin-mobile-nav');
+            const adminDashboardGrid = document.querySelector('#admin-view .dashboard-grid');
+            const adminMobileBackBtn = document.getElementById('admin-mobile-back-btn');
+            const adminColumns = {
+                labs: adminDashboardGrid.querySelector('.column:nth-child(1)'),
+                profiles: adminDashboardGrid.querySelector('.column:nth-child(2)'),
+                packages: adminDashboardGrid.querySelector('.column:nth-child(3)'),
+                tests: adminDashboardGrid.querySelector('.column:nth-child(4)'),
+            };
+
+            adminMobileNav.addEventListener('click', (e) => {
+                const card = e.target.closest('.mobile-nav-card');
+                if (!card) return;
+
+                const columnKey = card.dataset.column;
+
+                // Hide nav, show grid and back button
+                adminMobileNav.style.display = 'none';
+                adminDashboardGrid.style.display = 'grid'; // Show the grid container
+                adminMobileBackBtn.style.display = 'inline-flex';
+
+                // Hide all columns, then show the selected one
+                Object.values(adminColumns).forEach(col => col.style.display = 'none');
+                if (adminColumns[columnKey]) {
+                    adminColumns[columnKey].style.display = 'flex';
+                }
+            });
+
+            adminMobileBackBtn.addEventListener('click', () => {
+                // Hide grid and back button, show nav
+                adminMobileNav.style.display = 'grid';
+                adminDashboardGrid.style.display = 'none';
+                adminMobileBackBtn.style.display = 'none';
+
+                // Reset columns to be visible for desktop
+                Object.values(adminColumns).forEach(col => col.style.display = 'flex');
+            });
+
+            // --- REVISED: Toggle View Button Listener ---
+            toggleBtn.addEventListener('click', () => {
+                if (adminView.style.display !== 'none') {
+                    // --- SWITCHING TO CUSTOMER VIEW ---
+                    renderCustomerView(); // Render customer view *before* showing
+                    adminView.style.display = 'none';
+                    customerView.style.display = 'block';
+
+                    // NEW: Check for mobile view
+                    if (window.innerWidth <= 768) {
+                        document.body.classList.add('customer-view-mobile');
+                    } else {
+                        document.body.classList.remove('customer-view-mobile');
+                    }
+
+                    cartBtn.style.display = 'inline-flex'; // Show header cart (CSS will hide it if mobile)
+
+                    toggleBtn.innerHTML = `
+                        <span class="material-symbols-outlined">admin_panel_settings</span>
+                        Show Admin Panel
+                    `;
+                } else {
+                    // --- SWITCHING TO ADMIN VIEW ---
+                    adminView.style.display = 'block';
+                    customerView.style.display = 'none';
+                    cartBtn.style.display = 'none';
+                    document.body.classList.remove('customer-view-mobile'); // NEW: Always remove when in admin
+
+                    toggleBtn.innerHTML = `
+                        <span class="material-symbols-outlined">visibility</span>
+                        Show Customer View
+                    `;
+
+                    // Reset admin view state based on window size
+                    if (window.innerWidth <= 768) {
+                        adminMobileNav.style.display = 'grid';
+                        adminDashboardGrid.style.display = 'none';
+                        adminMobileBackBtn.style.display = 'none';
+                    } else {
+                        adminMobileNav.style.display = 'none';
+                        adminDashboardGrid.style.display = 'grid';
+                        adminMobileBackBtn.style.display = 'none';
+                    }
+                    // Ensure all columns are visible by default (for desktop/grid)
+                    Object.values(adminColumns).forEach(col => col.style.display = 'flex');
+                }
+            });
+
+            // --- Admin Search Listeners ---
+            document.getElementById('labs-search').addEventListener('input', e => renderLabs(e.target.value));
+            document.getElementById('profiles-search').addEventListener('input', e => renderProfiles(e.target.value));
+            document.getElementById('packages-search').addEventListener('input', e => renderPackages(e.target.value));
+            document.getElementById('tests-search').addEventListener('input', e => renderTests(e.target.value));
+
+            // --- Modal Close Listeners ---
+            document.getElementById('close-admin-modal-btn').onclick = closeAdminModal;
+            document.getElementById('admin-modal-cancel-btn').onclick = closeAdminModal;
+            document.getElementById('close-details-modal-btn').onclick = closeDetailsModal;
+            document.getElementById('details-modal-close-btn').onclick = closeDetailsModal;
+            document.getElementById('close-checkout-modal-btn').onclick = closeCheckoutModal;
+            document.getElementById('checkout-cancel-btn').onclick = closeCheckoutModal;
+
+            // --- Cart & Checkout Listeners ---
+            cartBtn.addEventListener('click', openCheckoutModal);
+            document.getElementById('checkout-submit-btn').addEventListener('click', placeOrder);
+
+            // --- NEW: Resize listener to toggle mobile UI ---
+            window.addEventListener('resize', () => {
+                if (customerView.style.display === 'block') { // Only if in customer view
+                    if (window.innerWidth <= 768) {
+                        document.body.classList.add('customer-view-mobile');
+                    } else {
+                        document.body.classList.remove('customer-view-mobile');
+                    }
+                }
+
+                // Also reset admin view on resize
+                if (adminView.style.display === 'block') {
+                    if (window.innerWidth <= 768) {
+                        // On mobile, if in admin, default to nav
+                        adminMobileNav.style.display = 'grid';
+                        adminDashboardGrid.style.display = 'none';
+                        adminMobileBackBtn.style.display = 'none';
+                        Object.values(adminColumns).forEach(col => col.style.display = 'flex'); // Reset columns
+                    } else {
+                        // On desktop, default to grid
+                        adminMobileNav.style.display = 'none';
+                        adminDashboardGrid.style.display = 'grid';
+                        adminMobileBackBtn.style.display = 'none';
+                        Object.values(adminColumns).forEach(col => col.style.display = 'flex'); // Reset columns
+                    }
+                }
+            });
+
+            // --- Main Event Delegation ---
+            document.body.addEventListener('click', (e) => {
+                const target = e.target.closest('[data-action]');
+                if (!target) return;
+
+                const action = target.dataset.action;
+                const type = target.dataset.type;
+                const id = target.dataset.id;
+
+                // --- RE-ORDERED LOGIC TO FIX "ADD TO CART" BUG ---
+
+                // 1. Customer Actions (check specific actions first)
+                if (action === 'addToCart') {
+                    addToCart(type, id);
+                    return; // Stop here
+                }
+                if (action === 'viewDetails') {
+                    openDetailsModal(type, id);
+                    return; // Stop here
+                }
+                if (action === 'removeFromCart') {
+                    removeFromCart(type, id);
+                    return; // Stop here
+                }
+                // --- NEW: Handle category search clicks
+                if (action === 'searchCategory') {
+                    const query = target.dataset.query;
+                    searchBar.value = query;
+                    handleSearch();
+                    searchBar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return; // Stop here
+                }
+
+                // --- NEW: Handle Bottom Nav clicks ---
+                if (action === 'nav-home' || action === 'nav-search' || action === 'nav-cart') {
+
+                    if (action === 'nav-home') {
+                        document.querySelectorAll('#bottom-nav .nav-item').forEach(item => item.classList.remove('active'));
+                        target.classList.add('active');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                    if (action === 'nav-search') {
+                        document.querySelectorAll('#bottom-nav .nav-item').forEach(item => item.classList.remove('active'));
+                        target.classList.add('active');
+                        searchBar.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        searchBar.focus();
+                    }
+                    if (action === 'nav-cart') {
+                        // Cart is a modal action, it doesn't change the active state of Home/Search
+                        openCheckoutModal();
+                    }
+                    return; // Stop here
+                }
+
+                // 2. Admin Actions (will only run if customer actions didn't match)
+                if (action.startsWith('add') || action.startsWith('edit')) {
+                    openAdminModal(action, id);
+                }
+            });
+
+            // --- Customer Search Listeners ---
+            searchBar.addEventListener('input', handleSearch);
+            clearSearchBtn.addEventListener('click', clearSearch);
+
+            // Initial Render
+            renderAllAdmin();
+        });
+    </script>
+</body>
+
+</html>
