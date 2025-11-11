@@ -123,11 +123,11 @@
         }
 
         /* .btn-edit {
-            background-color: #ffcccc;
-            color: #333;
-            padding: 6px 12px;
-            font-size: 13px;
-        } */
+            background-color: #ffcccc;
+            color: #333;
+            padding: 6px 12px;
+            font-size: 13px;
+        } */
         /* REMOVED btn-edit style block */
 
         .btn-green {
@@ -157,14 +157,14 @@
         }
 
         .btn-gradient {
-            background: linear-gradient(145deg, #350f21 0%, #bf2424 100%);
+            background: linear-gradient(0deg, #350f21 0%, #bf2424 100%);
             color: white;
             border: none;
             box-shadow: var(--shadow);
         }
 
         .btn-gradient:hover {
-            background: linear-gradient(145deg, #2a0c1a 0%, #a61d1d 100%);
+            background: linear-gradient(0deg, #2a0c1a 0%, #a61d1d 100%);
             box-shadow: var(--shadow-hover);
             transform: translateY(-1px);
         }
@@ -737,7 +737,8 @@
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            /* UPDATED: z-index changed from 1000 to 2000 */
+            z-index: 2000;
             left: 0;
             top: 0;
             width: 100%;
@@ -994,7 +995,8 @@
             border-radius: var(--radius-md);
             padding: 16px;
             position: fixed;
-            z-index: 2000;
+            /* UPDATED: z-index changed from 2000 to 3000 */
+            z-index: 3000;
             left: 50%;
             transform: translateX(-50%);
             bottom: 30px;
@@ -1284,8 +1286,8 @@
     <div class="app-toolbar">
         <div class="logo icon-text">
             <!-- UPDATED: Replaced icon with image -->
-            <img src="toplabslogo.png" alt="TopLabs Logo"
-                style="height: 3em; width: auto; border-radius: 4px; object-fit: contain;">
+            <img src="https://raw.githubusercontent.com/sushant-00/Datalytix-Media/main/toplabslogo.png"
+                alt="TopLabs Logo" style="height: 3em; width: auto; border-radius: 4px; object-fit: contain;">
         </div>
         <div class="controls">
             <button id="toggle-view-btn" class="btn-secondary icon-text">
@@ -1570,13 +1572,16 @@
 
     <script>
         // --- 1. GLOBAL "DATABASE" (NEW MODEL) ---
+        // I've updated the logo paths to be absolute URLs for demo purposes.
+        const logoBaseUrl = "https://raw.githubusercontent.com/sushant-00/Datalytix-Media/main/";
+
         let appDatabase = {
             labs: [
-                { id: "l1", name: "Thyrocare", logoS3Path: "1750842050962.png" },
-                { id: "l2", name: "Redcliff", logoS3Path: "1750842190302.png" },
-                { id: "l3", name: "Dr.Lal Pathlab", logoS3Path: "1750842351577.png" },
-                { id: "l4", name: "Metropolis", logoS3Path: "1751435827928.png" },
-                { id: "l5", name: "Krishna Lab", logoS3Path: "1750842438534.png" }
+                { id: "l1", name: "Thyrocare", logoS3Path: `${logoBaseUrl}1750842050962.png` },
+                { id: "l2", name: "Redcliff", logoS3Path: `${logoBaseUrl}1750842190302.png` },
+                { id: "l3", name: "Dr.Lal Pathlab", logoS3Path: `${logoBaseUrl}1750842351577.png` },
+                { id: "l4", name: "Metropolis", logoS3Path: `${logoBaseUrl}1751435827928.png` },
+                { id: "l5", name: "Krishna Lab", logoS3Path: `${logoBaseUrl}1750842438534.png` }
             ],
             tests: [
                 {
@@ -1730,9 +1735,9 @@
                 list.innerHTML += `
                     <div class="item-card lab-card">
                         <div class="lab-logo-container">
-                            <!-- UPDATED: Use local logoS3Path with placeholder fallback -->
+                            <!-- UPDATED: Use logoS3Path with placeholder fallback -->
                             ${lab.logoS3Path ?
-                        `<img src="${lab.logoS3Path}" alt="${lab.name}" onerror="this.src='https://placehold.co/100x100/eee/333?text=${lab.name.substring(0, 1)}'">` :
+                        `<img src="${lab.logoS3Path}" alt="${lab.name}" onerror="this.onerror=null; this.src='https://placehold.co/100x100/eee/333?text=${lab.name.substring(0, 1)}';">` :
                         '<span class="material-symbols-outlined">business</span>'
                     }
                         </div>
@@ -1811,11 +1816,11 @@
                             <span class="price">₹${pkg.discountPrice} <span class="mrp">₹${pkg.mrp}</span></span>
                         </div>
                         <div class="item-card-body">
+                            <p style="font-size: 0.9em; color: #333;">
+                                Includes <strong>${testCount}</strong> tests.
+                           </p>
                            <p style="margin: 0 0 10px 0;">
                                 <span class="badge-lab">${lab ? lab.name : 'No Lab'}</span>
-                           </p>
-                           <p style="font-size: 0.9em; color: #333;">
-                                Includes <strong>${testCount}</strong> unique tests.
                            </p>
                         </div>
                         <div class="item-card-footer">
@@ -1906,13 +1911,13 @@
                     <div class="package-display-card card">
                         <div class="card-content">
                             <h3>${pkg.name}</h3>
-                            <div class="lab-name icon-text">
-                                <span class="material-symbols-outlined">business</span>
-                                ${lab ? lab.name : 'TopLabs'}
-                            </div>
                             <div class="details">
                                 <span class="material-symbols-outlined">science</span>
-                                Includes ${uniqueTestIds.size} unique tests
+                                Includes ${uniqueTestIds.size} tests
+                            </div>
+                             <div class="lab-name icon-text">
+                                <span class="material-symbols-outlined">business</span>
+                                ${lab ? lab.name : 'TopLabs'}
                             </div>
                             <div class="price">
                                 ₹${pkg.discountPrice}
@@ -2005,14 +2010,14 @@
                             <div class="lab-mapping-item">
                                 <label>${lab.name}</label>
                                 <div class="form-grid-2">
-                                     <div class="form-group">
-                                        <label for="form-test-mrp-${lab.id}">MRP (₹)</label>
-                                        <input type="number" class="lab-mapping-input" data-lab-id="${lab.id}" data-type="mrp" id="form-test-mrp-${lab.id}" value="${mapping ? mapping.mrp : ''}" placeholder="e.g. 180">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="form-test-discount-${lab.id}">Discount Price (₹)</label>
-                                        <input type="number" class="lab-mapping-input" data-lab-id="${lab.id}" data-type="discountPrice" id="form-test-discount-${lab.id}" value="${mapping ? mapping.discountPrice : ''}" placeholder="e.g. 99">
-                                    </div>
+                                        <div class="form-group">
+                                            <label for="form-test-mrp-${lab.id}">MRP (₹)</label>
+                                            <input type="number" class="lab-mapping-input" data-lab-id="${lab.id}" data-type="mrp" id="form-test-mrp-${lab.id}" value="${mapping ? mapping.mrp : ''}" placeholder="e.g. 180">
+                                        </div>
+                                       <div class="form-group">
+                                            <label for="form-test-discount-${lab.id}">Discount Price (₹)</label>
+                                            <input type="number" class="lab-mapping-input" data-lab-id="${lab.id}" data-type="discountPrice" id="form-test-discount-${lab.id}" value="${mapping ? mapping.discountPrice : ''}" placeholder="e.g. 99">
+                                        </div>
                                 </div>
                             </div>
                         `;
@@ -2392,13 +2397,13 @@
                     <div class="detail-section">
                         <p>${item.description || 'No description available.'}</p>
                         <ul class="detail-list">
-                            <li><span>Price</span> 
+                            <li><span>Price</span> 
                                 <span class="price">₹${item.discountPrice} <span class="mrp">₹${item.mrp}</span></span>
                             </li>
-                            <li><span>Lab</span> 
+                            <li><span>Lab</span> 
                                 <span>${lab ? lab.name : 'N/A'}</span>
                             </li>
-                            <li><span>Total Unique Tests</span> <span>${uniqueTestIds.size}</span></li>
+                            <li><span>Total Tests</span> <span>${uniqueTestIds.size}</span></li>
                         </ul>
                     </div>
                     <div class="detail-section">
@@ -2472,7 +2477,7 @@
                             <h3>${item.name}</h3>
                             <p>
                                 <span class="badge-lab" style="font-size: 0.9em;">${lab ? lab.name : 'N/A'}</span>
-                                Includes ${testCount} unique tests
+                                Includes ${testCount} tests
                             </p>
                             <div class="price">₹${item.discountPrice} <span class="mrp">₹${item.mrp}</span></div>
                         </div>
